@@ -1,5 +1,5 @@
 import Login from './pages/Login/Login';
-// import SignUp from './pages/SignUp/SignUp';
+import SignUp from './pages/SignUp/SignUp';
 import { Navigate, Route, Routes } from 'react-router';
 // import Home from './pages/Home';
 import DashboardLayout from './Layout/dashboard';
@@ -16,7 +16,7 @@ function App() {
       <Route path='/' element={<Login />} />
       {/* <Route path="/home" element={<Navigate to="/" />} /> */}
       <Route path="/signIn" element={<Navigate to="/" />} />
-      {/* <Route path="/signUp" element={<SignUp />} /> */}
+      <Route path="/signUp" element={<SignUp />} />
       <Route path="/dashboard" element={<DashboardLayout />} />
       <Route path="/dashboard/" element={<DashboardLayout />}>
         <Route path="/dashboard/flights" element={<Flights />} />

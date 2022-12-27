@@ -37,6 +37,12 @@ const Airplane = () => {
         {
             label: `manu date`,
         },
+        {
+            label: 'Edit',
+          },
+           {
+            label: 'Delete',
+          },
     ];
 
     const rows = [
@@ -86,6 +92,8 @@ const Airplane = () => {
                                 <TableCell sx={{ textAlign: 'center' }}>{typeid}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{capacity}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{manu_date}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

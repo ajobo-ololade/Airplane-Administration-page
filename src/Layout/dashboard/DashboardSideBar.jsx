@@ -5,74 +5,74 @@ import Drawer from '@mui/material/Drawer';
 import PropTypes from 'prop-types';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 
-export const DashboardSideBar = ({}) => {
+export const DashboardSideBar = ({ }) => {
   const sideContent = [
     {
       title: 'Dashboard',
       path: '',
-      icon: <Home sx={{color: "white"}} />
+      icon: <Home sx={{ color: "white" }} />
     },
     {
       title: 'Staff',
       path: '/dashboard/staffs',
-      icon: <AccountBox sx={{color: "white"}} />
+      icon: <AccountBox sx={{ color: "white" }} />
     },
     {
       title: 'Airplanes',
       path: '/dashboard/airplanes',
-      icon: <DriveFolderUploadIcon sx={{color: "white"}} />
+      icon: <DriveFolderUploadIcon sx={{ color: "white" }} />
     },
     {
       title: 'Flight',
       path: '/dashboard/flights',
-      icon: <Group sx={{color: "white"}} />
+      icon: <Group sx={{ color: "white" }} />
     },
     {
       title: 'Passangers',
       path: '/dashboard/passangers',
-      icon: <Article sx={{color: "white"}} />
+      icon: <Article sx={{ color: "white" }} />
     },
     {
       title: 'Log Out',
       path: '',
-      icon: <Settings sx={{color: "white"}} />
+      icon: <Settings sx={{ color: "white" }} />
     }
   ]
 
   return (
     <>
-    <Box  position="fixed" sx={{marginTop: '60px',}} >
-          {sideContent.map(({ title, path, icon }) => (
-            <List>
-              <ListItem disablePadding>
-                <ListItemButton component="a" href={path}>
-                  <ListItemIcon>
-                    {icon}
-                  </ListItemIcon>
-                  <ListItemText primary={title} />
-                </ListItemButton>
-              </ListItem>
-            </List>
-          ))}
+      <Box position="fixed" sx={{ marginTop: '60px', }} >
+        {sideContent.map(({ title, path, icon }) => (
           <List>
-                <ListItem disablePadding>
-                    <ListItemButton component="a" href="#">
-                        <ListItemIcon>
-                            <ModeNight />
-                        </ListItemIcon>
-                        {/* onChange={e => setMode(mode === "light" ? "dark" : "light" )} */}
-                        <Switch  />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-        </Box>
-</>
+            <ListItem disablePadding>
+              <ListItemButton component="a" href={path}>
+                <ListItemIcon>
+                  {icon}
+                </ListItemIcon>
+                <ListItemText primary={title} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        ))}
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton component="a" href="#">
+              <ListItemIcon>
+                <ModeNight />
+              </ListItemIcon>
+              {/* onChange={e => setMode(mode === "light" ? "dark" : "light" )} */}
+              <Switch />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
+    </>
   )
 };
-DashboardSideBar.propTypes = {
+// DashboardSideBar.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  window: PropTypes.func,
-};
+//   window: PropTypes.func,
+// };

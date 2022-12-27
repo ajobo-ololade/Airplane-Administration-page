@@ -86,8 +86,8 @@ const Passangers = () => {
                     <TableCell sx={{textAlign: 'center'}}>{hostelName}</TableCell>
                     <TableCell sx={{textAlign: 'center'}}>{roomNum}</TableCell>
                     <TableCell sx={{textAlign: 'center'}}>L.A</TableCell>
-                    <TableCell sx={{textAlign: 'center'}}><EditIcon sx={{color: 'green'}}/></TableCell>
-                    <TableCell sx={{textAlign: 'center'}}><DeleteIcon sx={{color: 'red'}}/></TableCell>
+                    <TableCell sx={{textAlign: 'center'}}><EditIcon sx={{color: 'green', cursor: 'pointer'}}/></TableCell>
+                    <TableCell sx={{textAlign: 'center'}}><DeleteIcon sx={{color: 'red', cursor: 'pointer'}}/></TableCell>
                   </TableRow>
                 ))}
           </TableBody>

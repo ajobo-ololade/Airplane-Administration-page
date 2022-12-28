@@ -1,4 +1,4 @@
-import { airplaneActionTypes, messageActionType } from "../type";
+import { airplaneActionTypes, messageActionType } from "../types"
 
 const initialState = {
 
@@ -8,7 +8,7 @@ const initialState = {
     
 }
 
-export const chatsReducer = (state = initialState, { type, payload }) => {
+export const airplaneReducers = (state = initialState, { type, payload }) => {
 
     switch (type) {
 
@@ -18,7 +18,7 @@ export const chatsReducer = (state = initialState, { type, payload }) => {
                 successMessage: payload,
             }
 
-        case airplaneActionTypes.GET_CHATS:
+        case airplaneActionTypes.GET_AIRPLANE:
             return {
                 ...state,
                 AIRPLANE: payload

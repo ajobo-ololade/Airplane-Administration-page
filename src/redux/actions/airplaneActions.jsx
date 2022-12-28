@@ -1,22 +1,29 @@
+import axios from "axios";
 import { getAirplaneRequest } from "../../api/airplaneRequests";
 import { airplaneActionTypes } from "../types";
+// import axios from ".";
+// import axios from "../../api";
 
-export const getAirplaneAction = (values) => async (dispatch) => {
+export const getAirplaneAction = () => async (dispatch) => {
 
     try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/airplane`);
         
-        const data = await getAirplaneRequest(values);
-        console.log(data);
+        return dispatch({
+            type: airplaneActionTypes.GET_AIRPLANE,
+            payload: response.data,
+        })
 
-        // if (data?.status === 200) {
 
-        //     dispatch({
-        //         type: airplaneActionTypes.GET_CHATS,
-        //         payload: data.content.data.all,
-        //     })
+
+        //     const response = await getAirplaneRequest();
+        //     console.log(response);
+
+        //     if (response?.status === 200) {
+
         // };
-
-        return data;
+        // 
+        // return response;
 
     } catch (error) {
         console.log(error);

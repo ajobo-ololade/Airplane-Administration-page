@@ -1,5 +1,5 @@
 
-import { format, fromUnixTime } from 'date-fns';
+// import { format, fromUnixTime } from 'date-fns';
 
 const storage_prefix = process.env.NODE_ENV === 'development' ? 'its_dev_' : 'its_prod_';
 
@@ -75,14 +75,14 @@ export const formatPayloadData = (obj) => {
 }
 
 // group message by dates
-export const groupedDays = (messages, key) => {
-  if (messages) {
-    return messages.reduce((acc, el, i) => {
-      const messageDay = format(new Date(fromUnixTime(el[key])) || new Date(), 'MMM dd, yyyy');
-      if (acc[messageDay]) {
-        return { ...acc, [messageDay]: acc[messageDay].concat([el]) };
-      }
-      return { ...acc, [messageDay]: [el] };
-    }, {});
-  }
-};
+// export const groupedDays = (messages, key) => {
+//   if (messages) {
+//     return messages.reduce((acc, el, i) => {
+//       const messageDay = format(new Date(fromUnixTime(el[key])) || new Date(), 'MMM dd, yyyy');
+//       if (acc[messageDay]) {
+//         return { ...acc, [messageDay]: acc[messageDay].concat([el]) };
+//       }
+//       return { ...acc, [messageDay]: [el] };
+//     }, {});
+//   }
+// };

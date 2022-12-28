@@ -57,8 +57,8 @@ export const DashboardNavBar = ({ setOpen }) => {
             >
               <MenuIcon onClick={() => setOpen(true)}/>
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Photos
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, }}>
+              Airline Management System
             </Typography>
             {auth && (
               <div>

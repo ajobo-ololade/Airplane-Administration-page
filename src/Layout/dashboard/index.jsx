@@ -14,40 +14,40 @@ function DashboardLayout(props) {
   const sideContent = [
     {
       title: 'Dashboard',
-      path: '',
-      icon: <Home />
+      path: '/dashboard/index',
+      icon: <Home sx={{ color: "whit" }} />
     },
     {
-      title: 'Profile',
-      path: '/dashboard/profile',
-      icon: <AccountBox />
+      title: 'Staff',
+      path: '/dashboard/staffs',
+      icon: <AccountBox sx={{ color: "whit" }} />
     },
     {
-      title: 'Hostel Upload',
-      path: '/dashboard/hostelUpload',
-      icon: <DriveFolderUploadIcon />
+      title: 'Airplanes',
+      path: '/dashboard/airplanes',
+      icon: <DriveFolderUploadIcon sx={{ color: "whit" }} />
     },
     {
-      title: 'Users',
-      path: '/dashboard/users',
-      icon: <Group />
+      title: 'Flight',
+      path: '/dashboard/flights',
+      icon: <Group sx={{ color: "whit" }} />
     },
     {
-      title: 'List of Hostels',
-      path: '/dashboard/hostelLists',
-      icon: <Article />
+      title: 'Passangers',
+      path: '/dashboard/passangers',
+      icon: <Article sx={{ color: "whit" }} />
     },
     {
       title: 'Log Out',
       path: '',
-      icon: <Settings />
+      icon: <Settings sx={{ color: "whit" }} />
     }
   ]
 
   return (
     <Grid container>
       <Grid item xs={2} sm={2} sx={{ display: { xs: "none", sm: 'block', lg: 'block' }, backgroundColor: 'primary.main', height: '100vh', color: 'white' }}>
-        <SwipeableDrawer anchor='left' open={open} onClose={() => setOpen(false)} sx={{ width: { xs: '50%', lg: '30%' }, padding: '2rem', overflowY: 'auto' }}>
+        <SwipeableDrawer anchor='left' open={open} onClose={() => setOpen(false)} sx={{ width: { xs: '50%', lg: '0%' }, padding: '2rem', overflowY: 'auto' }}>
           <Box>
             {sideContent.map(({ title, path, icon }) => (
               <List>
@@ -66,12 +66,12 @@ function DashboardLayout(props) {
         <DashboardSideBar />
       </Grid>
       <Grid item xs={12} sm={10}>
-        <Grid container>
+        <Grid containe>
           <Grid item xs={12}>
             <DashboardNavBar setOpen={setOpen} />
           </Grid>
           <Grid item xs={12} sx={{ }}>
-            <Outlet style={{padding: '2rem'}}/>
+            <Outlet style={{}}/>
           </Grid>
         </Grid>
       </Grid>

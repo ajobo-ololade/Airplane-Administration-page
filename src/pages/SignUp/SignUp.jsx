@@ -39,10 +39,10 @@ const SignUp = () => {
     };
     return (
         <Container component="main" maxWidth="xs">
-            <Box sx={{ margin: 'auto', padding: '5px' }}>
-                <Alert severity="success">Login Succeful</Alert>
+            {/* <Box sx={{ margin: 'auto', padding: '5px' }}>
+                <Alert severity="success">Registration Succeful</Alert>
                 <Alert severity="error">Invalid Crediential</Alert>
-            </Box>
+            </Box> */}
 
             <Card sx={{ margin: 'auto', marginTop: '50px', padding: '2rem' }} >
                 <CardContent>
@@ -120,18 +120,13 @@ const SignUp = () => {
                                         id='category'
                                         label='Category'
                                         size='small'
-                                        select
                                         fullWidth
                                         {...getFieldProps('category')}
                                         error={Boolean(errors.category && touched.category)}
                                         helperText={touched.category && errors.category}
 
-                                    >
-                                        <MenuItem value="agent">Agent</MenuItem>
-                                        <MenuItem value="student">Student</MenuItem>
-
-
-                                    </TextField>
+                                    />
+                                    
                                 </Grid>
 
                                 <Grid item xs={12}

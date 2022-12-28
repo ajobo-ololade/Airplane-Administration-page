@@ -38,10 +38,10 @@ const Login = () => {
     return (
         <>
             <Container component="main" maxWidth="xs">
-                <Box sx={{ margin: 'auto', padding: '5px' }}>
+                {/* <Box sx={{ margin: 'auto', padding: '5px' }}>
                     <Alert severity="success">Login Succeful</Alert>
                     <Alert severity="error">Invalid Crediential</Alert>
-                </Box>
+                </Box> */}
 
 
 

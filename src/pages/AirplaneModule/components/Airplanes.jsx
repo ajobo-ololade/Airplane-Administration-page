@@ -1,19 +1,18 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Box } from '@mui/material';
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LinearProgress from '@mui/material/LinearProgress';
 import Modals from '../../../components/Modal';
 import { DeleteModal, EditModal } from './ModalComp';
 
-// import Paper from '@mui/material/Paper';
 
+const Airplane = () => {
 
-const Airplane = ({ airplanes }) => {
+    const { AIRPLANE } = useSelector((state) => state.AirplaneReducers);
 
-
-    console.log(airplanes);
+    // console.log(AIRPLANE);
 
     const headerData = [
         {
@@ -36,7 +35,7 @@ const Airplane = ({ airplanes }) => {
             label: 'Delete',
         },
     ];
-    
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [editOpen, setEditOpen] = React.useState(false);
@@ -48,8 +47,8 @@ const Airplane = ({ airplanes }) => {
         handleEditOpen()
     }
     const del = (e) => {
-       setDelObj(e)
-       handleDelOpen()
+        setDelObj(e)
+        handleDelOpen()
     }
     console.log(delObj);
     const handleEditOpen = () => setEditOpen(true);
@@ -65,10 +64,11 @@ const Airplane = ({ airplanes }) => {
         setPage(0);
     };
     return (
-        <>  
-         <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
-         <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+        <>
+            <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
+            <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
             <TableContainer>
+                {AIRPLANE ?
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -79,30 +79,29 @@ const Airplane = ({ airplanes }) => {
                             ))}
                         </TableRow>
                     </TableHead>
-                    {airplanes ?
-                        <TableBody>
-                            {airplanes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((airplane, id) => (
-                                <TableRow key={id}>
-                                    <TableCell sx={{ textAlign: 'center' }}>{airplane.numser}</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>{airplane.manufacturer}</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>{airplane.model}</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>{airplane.aircraft_type}</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(airplane)} /></TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(airplane)} /></TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                        :
-                        <Box sx={{ width: '100%' }}>
-                            <LinearProgress />
-                        </Box>
-                    }
+                    <TableBody>
+                        {AIRPLANE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((airplane, id) => (
+                            <TableRow key={id}>
+                                <TableCell sx={{ textAlign: 'center' }}>{airplane.numser}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{airplane.manufacturer}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{airplane.model}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{airplane.aircraft_type}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(airplane)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(airplane)} /></TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+
                 </Table>
+                 :
+                <Box sx={{ width: '100%' }}>
+                    <LinearProgress />
+                </Box>}
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={airplanes.length}
+                count={AIRPLANE.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

@@ -2,6 +2,7 @@ import { Card, CardContent, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { signUpRequest } from '../api/authRequest';
 
 const Dashboard = () => {
     const [flights, setFlights] = useState([]);
@@ -11,6 +12,7 @@ const Dashboard = () => {
     const [schedules, setSchedules] = useState([]);
     const [ratings, setRatings] = useState([]);
     const [airplaneTypes, setAirplaneTypes] = useState([]);
+    const [passengers, setPassengers] = useState([]);
     useEffect(() => {
   
         axios.get(`http://127.0.0.1:8000/api/flight`).then((res) => {
@@ -47,6 +49,13 @@ const Dashboard = () => {
             setAirplaneTypes(res.data.airplanetype)
             // console.log(res.data);
         })
+
+        axios.get(`http://127.0.0.1:8000/api/passenger`).then((res) => {
+            setPassengers(res.data.passenger)
+            // console.log(res.data);
+        })
+
+        // signUpRequest()
         
         
     }, [])
@@ -79,6 +88,10 @@ const Dashboard = () => {
         {
             label: "Total Number of  Airplane Types",
             num: airplaneTypes.length
+        },
+        {
+            label: "Total Number of Passengers",
+            num: passengers.length
         },
     ]
     return (

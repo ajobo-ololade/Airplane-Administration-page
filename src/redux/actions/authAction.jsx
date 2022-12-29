@@ -1,3 +1,5 @@
+import { signUpRequest } from "../../api/authRequest";
+import { messageActionType } from "../types";
 
 
 export const LoginAction = (values) => async (dispatch) => {
@@ -33,30 +35,30 @@ export const LoginAction = (values) => async (dispatch) => {
 };
 
 export const signUpAction = (obj) => async (dispatch) => {
-//   try{
+  try{
 
-//       const data = await createIssuerRequest(formatPayloadData(obj));
+      const data = await signUpRequest(obj);
       
       // extract success
-    //   if (data?.success) {
-    //       dispatch({
-    //           type: messageActionType.SUCCESS_MESSAGE,
-    //           payload: data.success.message,
-    //       })
+      // if (data?.success) {
+      //     dispatch({
+      //         type: messageActionType.SUCCESS_MESSAGE
+      //         payload: data,
+      //     })
 
-    //   }
+      // }
       
       // extract error
-//       else{
-//           dispatch({
-//               type: messageActionType.ERROR_MESSAGE,
-//               payload: data.error.message,
-//           })
-//       }
+      // else{
+      //     dispatch({
+      //         type: messageActionType.ERROR_MESSAGE,
+      //         payload: data.error.message,
+      //     })
+      // }
 
-//       return data
+      return data
 
-//  }catch(error) {
-//   console.log(error);
-//  }
+ }catch(error) {
+  console.log(error);
+ }
 }

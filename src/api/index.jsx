@@ -23,20 +23,20 @@ axiosInstance.interceptors.request.use((config) => {
 
 axiosInstance.interceptors.response.use((response) => {
   // to trigger automatic logout if the auth is invalid
-  console.log(response)
-  // if (
-    // response.data?.error?.message === 'Invalid Login credential' ||
-    // response.data?.error?.message === 'Invalid token.' ||
-    // response.data?.error?.message === 'Expired session.' || 
-    // response.data?.error?.message === "Unauthorized user. Please login."
+  // console.log(response)
+  if (
+    response.data?.error?.message === 'Invalid Login credential' ||
+    response.data?.error?.message === 'Invalid token.' ||
+    response.data?.error?.message === 'Expired session.' || 
+    response.data?.error?.message === "Unauthorized user. Please login."
     
     // response.data?.error?.status === 401
-  // ) {
-  //   storageRemove('token');
-    // storageRemove('userData');
-    // window.location.pathname = '/login';
-    // console.log('logout refreshed');
-  // }
+  ) {
+    storageRemove('token');
+    storageRemove('userData');
+    window.location.pathname = '/login';
+    console.log('logout refreshed');
+  }
   return response;
 });
 

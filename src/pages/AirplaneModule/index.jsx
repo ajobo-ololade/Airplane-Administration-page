@@ -3,17 +3,13 @@ import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import Airplane from './components/Airplanes'
 import NewAirplane from './components/NewAirplane'
-import axios from 'axios';
+import { GetAirplaneAction } from '../../redux/actions/airplaneActions'
+import { useDispatch } from 'react-redux';
 
 const AirplaneModule = () => {
-  const [airplanes, setAirplanes] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
-
-      const response = axios.get(`http://127.0.0.1:8000/api/airplane`).then((res) => {
-          setAirplanes(res.data.airplane)
-          // console.log(res.data.airplane);
-      })
-    
+      dispatch(GetAirplaneAction())    
   }, [])
   return (
     <>
@@ -25,7 +21,7 @@ const AirplaneModule = () => {
         </Grid>
         <Grid item xs={12} sm={12}>
           <Box>
-            <Airplane airplanes={airplanes} />
+            <Airplane />
           </Box>
         </Grid>
       </Grid>

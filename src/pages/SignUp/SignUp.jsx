@@ -23,6 +23,7 @@ const SignUp = () => {
 
         onSubmit: async (values, { resetForm }) => {
             console.log(values);
+            
         },
 
         validationSchema: Yup.object().shape({

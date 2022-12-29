@@ -8,8 +8,8 @@ const initialState = {
     
 }
 
-export const airplaneReducers = (state = initialState, { type, payload }) => {
-
+export const AirplaneReducers = (state = initialState, { type, payload }) => {
+// console.log(payload);
     switch (type) {
 
         case messageActionType.SUCCESS_MESSAGE:

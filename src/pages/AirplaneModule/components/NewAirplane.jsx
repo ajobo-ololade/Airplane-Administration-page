@@ -5,11 +5,15 @@ import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { AddAirplaneAction } from '../../../redux/actions/airplaneActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NewAirplane = () => {
   const [open, setOpen] = React.useState(false);
+  const {successMessage} = useSelector((state) => state.AirplaneReducers)
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       // numser: ``,
@@ -19,18 +23,9 @@ const NewAirplane = () => {
     },
 
     onSubmit: async (values, { resetForm }) => {
-      // const response = axios.post(`http://127.0.0.1:8000/api/airplane/create`, values).then((res) => {
-        console.log(values);
-      // })
-      try {
-        let result = await axios.post(          // any call like get
-        `http://127.0.0.1:8000/api/airplane/create`,         // your URL
-        values
-        );
-        console.log(result.response.data);
-      } catch (error) {
-        console.error(error.response.data);     // NOTE - use "error.response.data` (not "error")
-      }
+      const data = await dispatch(AddAirplaneAction(values));
+      // console.log(data);
+      
     },
 
     validationSchema: Yup.object().shape({

@@ -81,7 +81,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                 {/* <LockOutlinedIcon /> */}
                             </Avatar>
                             <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                                Add New Airplane
+                                Edit Flight
                             </Typography>
 
                             <form onSubmit={handleSubmit}>

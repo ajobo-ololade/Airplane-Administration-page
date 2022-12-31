@@ -1,16 +1,16 @@
 import axios from "axios";
-import { addPasssengerRequest, deletePasssengerRequest, editPasssengerRequest, getPasssengerRequest } from "../../api/passengerRequest";
+import { addStaffRequest, deleteStaffRequest, editStaffRequest, getStaffRequest } from "../../api/staffsRequest";
 import { staffActionTypes, messageActionType } from "../types";
 
 export const GetStaffAction = () => async (dispatch) => {
 
     try {
-        const response = await getPasssengerRequest();
-        // console.log(response.Staff);
+        const response = await getStaffRequest();
+        console.log(response.employee);
         
         return dispatch({
             type: staffActionTypes.GET_STAFF,
-            payload: response?.staff,
+            payload: response?.employee,
         })
 
 
@@ -33,7 +33,7 @@ export const GetStaffAction = () => async (dispatch) => {
 
 export const AddStaffAction = (obj) => async (dispatch) => {
     try{
-        const response = await addPasssengerRequest(obj);
+        const response = await addStaffRequest(obj);
         // console.log(response.message);
         if(response?.message === true){
 
@@ -53,7 +53,7 @@ export const AddStaffAction = (obj) => async (dispatch) => {
 export const EditStaffAction = (value) => async (dispatch) => {
 
     try{
-        const response = await editPasssengerRequest(value);
+        const response = await editStaffRequest(value);
         console.log(response.message);
         if(response?.message === true){
 
@@ -73,7 +73,7 @@ export const EditStaffAction = (value) => async (dispatch) => {
 export const DeleteStaffAction = (value) => async (dispatch) => {
     
     try{
-        const response = await deletePasssengerRequest(value);
+        const response = await deleteStaffRequest(value);
         console.log(response.message);
         if(response?.message === true){
 

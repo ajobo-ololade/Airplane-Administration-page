@@ -3,6 +3,11 @@ import { Box } from '@mui/system'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { signUpRequest } from '../api/authRequest';
+import { useDispatch, useSelector } from 'react-redux';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import GroupsIcon from '@mui/icons-material/Groups';
+import PersonIcon from '@mui/icons-material/Person';
+import AccessibleIcon from '@mui/icons-material/Accessible';
 
 const Dashboard = () => {
     const [flights, setFlights] = useState([]);
@@ -13,12 +18,19 @@ const Dashboard = () => {
     const [ratings, setRatings] = useState([]);
     const [airplaneTypes, setAirplaneTypes] = useState([]);
     const [passengers, setPassengers] = useState([]);
+    const Data = [{label: 'flight', data: flights.length},]
+    // console.log(Data.map(({label, data}) => {
+    //     <i>{data}</i>
+    // }));
+    
+      
     useEffect(() => {
   
         axios.get(`http://127.0.0.1:8000/api/flight`).then((res) => {
             setFlights(res.data.flight)
             // console.log(res.data);
         })
+
 
         axios.get(`http://127.0.0.1:8000/api/airplane`).then((res) => {
             setAirplanes(res.data.airplane)
@@ -71,7 +83,8 @@ const Dashboard = () => {
         },
         {
             label: "Total Number of  Airplanes",
-            num: airplanes.length
+            num: airplanes.length,
+            icon: <FlightTakeoffIcon />
         },
         {
             label: "Total Number of  Flights",
@@ -96,7 +109,7 @@ const Dashboard = () => {
     ]
     return (
         <Grid container p={2}>
-            {totals.map(({label, num}, id) => (
+            {totals.map(({label, num, icon}, id) => (
                 <Grid xs={6} sm={3} p={1}>
                 <Card>
                     <CardContent>
@@ -105,6 +118,7 @@ const Dashboard = () => {
                                 {label}
                             </Typography>
                             <Typography sx={{textAlign: 'center'}}>
+                                {/* {icon} */}
                                 {num}
                             </Typography>
                         </Box>

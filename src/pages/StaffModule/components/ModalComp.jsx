@@ -1,10 +1,11 @@
-import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardContent, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from 'react-redux';
-import { EditAirplaneAction } from "../../../redux/actions/airplaneActions";
+import { EditStaffAction } from "../../../redux/actions/staffAction";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect } from "react";
+import  LoadingButton  from '@mui/lab/LoadingButton';
 
 const style = {
     position: 'absolute',
@@ -12,25 +13,21 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    // bgcolor: 'background.paper',
-    // border: '2px solid #000',
-    // boxShadow: 24,
     p: 4,
-    // backgroundColor: 'white'
 };
 
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose }) => {
     useEffect(() => {
         if (editObj) {
-          const { surname,  name, address, phone, ratingid, salary } = editObj;
-          setFieldValue('surname', surname);
-          setFieldValue('name',  name);
-          setFieldValue('address', address);
-          setFieldValue('phone', phone);
-          setFieldValue('ratingid', ratingid);
-          setFieldValue('salary', salary);
+            const { surname, name, address, phone, ratingid, salary } = editObj;
+            setFieldValue('surname', surname);
+            setFieldValue('name', name);
+            setFieldValue('address', address);
+            setFieldValue('phone', phone);
+            setFieldValue('ratingid', ratingid);
+            setFieldValue('salary', salary);
         }
-      }, [editObj]);
+    }, [editObj]);
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
@@ -43,7 +40,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            const response = await dispatch(EditAirplaneAction(values));
+            const response = await dispatch(EditStaffAction(values));
             console.log(response);
 
             resetForm();
@@ -244,14 +241,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
                                         }}
                                     >
 
-                                        <Button
-                                            variant={'contained'}
+                                        <LoadingButton
+                                            type="submit"
                                             fullWidth
-                                            type='submit'
+                                            color="primary"
+                                            variant="contained"
+                                            loading={isSubmitting}
                                         >
-                                            {isSubmitting ? <CircularProgress /> : "Update"}
-                                            {/* Add */}
-                                        </Button>
+                                            Update
+                                        </LoadingButton>
 
                                     </Grid>
 

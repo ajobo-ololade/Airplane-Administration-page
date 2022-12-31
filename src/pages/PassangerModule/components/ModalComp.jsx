@@ -4,7 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
-import { DeleteFlightAction, EditFlightAction } from "../../../redux/actions/flightAction";
+import LoadingButton from '@mui/lab/LoadingButton';
+import { EditPassengerAction } from "../../../redux/actions/passengerAction";
 
 const style = {
     position: 'absolute',
@@ -22,27 +23,30 @@ const style = {
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
     useEffect(() => {
         if (editObj) {
-          const { flightdate,  origin, destination, } = editObj;
-        //   const priviledgeArray = JSON.parse(priviledges);
-          setFieldValue('flightdate', flightdate);
-          setFieldValue(' origin',  origin);
-          setFieldValue('destination', destination);
+            const { surname, othername, adress, phone, schedulenum } = editObj;
+            setFieldValue('surname', surname);
+            setFieldValue(' othername', othername);
+            setFieldValue('adress', adress);
+            setFieldValue('phone', phone);
+            setFieldValue('schedulenum', schedulenum);
         }
-      }, [editObj]);
+    }, [editObj]);
 
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
 
-            flightdate: '',
-            origin: '',
-            destination: ''
+            surname: '',
+            othername: '',
+            adress: '',
+            phone: '',
+            schedulenum: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.flightnum
+            values.id = editObj.passID
             console.log(values);
-            const response = await dispatch(EditFlightAction(values));
+            const response = await dispatch(EditPassengerAction(values));
             console.log(response);
 
             resetForm();
@@ -51,9 +55,11 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         validationSchema: Yup.object().shape({
-            flightdate: Yup.string().required('Flight date is required'),
-            origin: Yup.string().required('Origin is required'),
-            destination: Yup.string().required('Destination Type is required'),
+            surname: Yup.string().required('Surname date is required'),
+            address: Yup.string().required('Address is required'),
+            othername: Yup.string().required('Other name Type is required'),
+            phone: Yup.string().required('Phone No Type is required'),
+            schedulenum: Yup.string().required('Schedule No Type is required'),
         }),
     });
 
@@ -80,11 +86,10 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                 {/* <LockOutlinedIcon /> */}
                             </Avatar>
                             <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                                Add New Airplane
+                                Edit Passenger
                             </Typography>
 
                             <form onSubmit={handleSubmit}>
-                                
                                 <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
                                     <Grid item xs={12}
@@ -97,16 +102,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='flightdate'
-                                            label='Flight Date'
+                                            id='surname'
+                                            label='Surname'
                                             size='small'
                                             fullWidth
-                                            type='date'
-                                            value={values.flightdate}
+                                            value={values.surname}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.flightdate && touched.flightdate)}
-                                            helperText={touched.flightdate && errors.flightdate}
+                                            error={Boolean(errors.surname && touched.surname)}
+                                            helperText={touched.surname && errors.surname}
 
                                         />
                                     </Grid>
@@ -121,15 +125,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='origin'
-                                            label='Flight Origin'
+                                            id='othername'
+                                            label='Other Name'
                                             size='small'
                                             fullWidth
-                                            value={values.origin}
+                                            value={values.othername}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.origin && touched.origin)}
-                                            helperText={touched.origin && errors.origin}
+                                            error={Boolean(errors.othername && touched.othername)}
+                                            helperText={touched.othername && errors.othername}
 
                                         />
 
@@ -145,15 +149,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='destination'
-                                            label='Flight Destination'
+                                            id='address'
+                                            label='Address'
                                             size='small'
                                             fullWidth
-                                            value={values.destination}
+                                            value={values.address}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.destination && touched.destination)}
-                                            helperText={touched.destination && errors.destination}
+                                            error={Boolean(errors.address && touched.address)}
+                                            helperText={touched.address && errors.address}
 
                                         />
 
@@ -167,13 +171,63 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                         }}
                                     >
 
-                                        <Button
-                                            variant={'contained'}
+                                        <TextField
+
+                                            id='phone'
+                                            label='Phone No'
+                                            size='small'
                                             fullWidth
-                                            type='submit'
+                                            value={values.phone}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.phone && touched.phone)}
+                                            helperText={touched.phone && errors.phone}
+
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='schedulenum'
+                                            label='Schedule No'
+                                            size='small'
+                                            fullWidth
+                                            value={values.schedulenum}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.schedulenum && touched.schedulenum)}
+                                            helperText={touched.schedulenum && errors.schedulenum}
+
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <LoadingButton
+                                            type="submit"
+                                            fullWidth
+                                            color="primary"
+                                            variant="contained"
+                                            loading={isSubmitting}
                                         >
                                             Update
-                                        </Button>
+                                        </LoadingButton>
 
                                     </Grid>
 

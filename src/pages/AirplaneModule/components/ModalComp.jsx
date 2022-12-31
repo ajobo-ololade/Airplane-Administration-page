@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
-import  LoadingButton  from '@mui/lab/LoadingButton';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const style = {
     position: 'absolute',
@@ -21,16 +21,16 @@ const style = {
 };
 
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
-    
+
     useEffect(() => {
         if (editObj) {
-          const { manufacturer,  model, aircraft_type, } = editObj;
-        //   const priviledgeArray = JSON.parse(priviledges);
-          setFieldValue('manufacturer', manufacturer);
-          setFieldValue(' model',  model);
-          setFieldValue('aircraft_type', aircraft_type);
+            const { manufacturer, model, aircraft_type, } = editObj;
+            //   const priviledgeArray = JSON.parse(priviledges);
+            setFieldValue('manufacturer', manufacturer);
+            setFieldValue(' model', model);
+            setFieldValue('aircraft_type', aircraft_type);
         }
-      }, [editObj]);
+    }, [editObj]);
 
     const dispatch = useDispatch();
     const formik = useFormik({
@@ -67,6 +67,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             sx={{ xs: {} }}
         >
             <Box sx={style}>
+            {/* <Grid sx={{height: '100%', alignItem: 'center', justifyContent: 'center'}}>
+                <Grid xs={12} sm={6} lg={4} sx={{border:' 2px solid #000', boxShadow: 24}}>
+                    <Grid container>
+                        <Grid item>
+                        
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid> */}
                 <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
                     <CardContent>
                         <Box
@@ -81,11 +90,11 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                 {/* <LockOutlinedIcon /> */}
                             </Avatar>
                             <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                                Add New Airplane
+                                Edit Airplane
                             </Typography>
 
                             <form onSubmit={handleSubmit}>
-                                
+
                                 <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
                                     <Grid item xs={12}
@@ -120,7 +129,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                     >
 
                                         <TextField
-                                        
+
                                             id='model'
                                             label='Model'
                                             size='small'
@@ -168,15 +177,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                         }}
                                     >
 
-<LoadingButton
-                      type="submit"
-                      fullWidth
-                      color="primary"
-                      variant="contained"
-                      loading={isSubmitting}
-                    >
-                      Update
-                    </LoadingButton>
+                                        <LoadingButton
+                                            type="submit"
+                                            fullWidth
+                                            color="primary"
+                                            variant="contained"
+                                            loading={isSubmitting}
+                                        >
+                                            Update
+                                        </LoadingButton>
 
                                     </Grid>
 
@@ -203,7 +212,7 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
         //   setFieldValue(' model',  model);
         //   setFieldValue('aircraft_type', aircraft_type);
         // }
-      }, [delObj]);
+    }, [delObj]);
 
     const dispatch = useDispatch();
     console.log(delObj.numser);
@@ -229,7 +238,7 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
                                 color="success"
                                 fullWidth
                                 onClick={handleDelete}
-                                // onClose={onClose}
+                            // onClose={onClose}
                             >
                                 Yes
                             </Button>

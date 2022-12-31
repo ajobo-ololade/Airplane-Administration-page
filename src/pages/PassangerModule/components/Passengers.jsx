@@ -5,20 +5,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
 import { TableRows } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
-import { DeleteModal, EditModal } from '../../FlightModule/components/ModalComp';
+import { EditModal, DeleteModal } from '../../PassangerModule/components/ModalComp';
 
-const Passengers = () => {  
+const Passengers = () => {
   const { PASSENGER } = useSelector((state) => state.PassengerReducers);
 
   console.log(PASSENGER);
 
   const headerData = [
+
     {
-      label: 'S/N',
+      label: 'Pass ID',
     },
-    {
-        label: 'Pass ID',
-      },
     {
       label: 'Surname',
     },
@@ -28,18 +26,18 @@ const Passengers = () => {
     {
       label: 'Address',
     },
-    
+
     {
       label: 'Phone No',
     },
-    
+
     {
       label: 'Schedule No',
     },
     {
       label: 'Edit',
     },
-     {
+    {
       label: 'Delete',
     },
   ];
@@ -74,33 +72,32 @@ const Passengers = () => {
   };
   return (
     <>
-    <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
-    <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+      <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
+      <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               {headerData.map((data, id) => (
-                <TableCell key={id} sx={{textAlign: 'center'}}>
+                <TableCell key={id} sx={{ textAlign: 'center' }}>
                   {data.label}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-          {PASSENGER.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((passenger, id) => (
-                  <TableRow key={id}>
-                    <TableCell sx={{textAlign: 'center'}}>{id+1}</TableCell>
-                    <TableCell sx={{textAlign: 'center'}}>{passenger.pasID}</TableCell>
-                    <TableCell sx={{textAlign: 'center'}}>{passenger.surname}</TableCell>
-                    <TableCell sx={{textAlign: 'center'}}>{passenger.othername}</TableCell>
-                    <TableCell sx={{textAlign: 'center'}}>{passenger.address}</TableCell>
-                    <TableCell sx={{textAlign: 'center'}}>{passenger.phone}</TableCell>
-                    <TableCell sx={{textAlign: 'center'}}>{passenger.schedulenum}</TableCell>
+            {PASSENGER.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((passenger, id) => (
+              <TableRow key={id}>
+                <TableCell sx={{ textAlign: 'center' }}>{passenger.pasID}</TableCell>
+                <TableCell sx={{ textAlign: 'center' }}>{passenger.surname}</TableCell>
+                <TableCell sx={{ textAlign: 'center' }}>{passenger.othername}</TableCell>
+                <TableCell sx={{ textAlign: 'center' }}>{passenger.address}</TableCell>
+                <TableCell sx={{ textAlign: 'center' }}>{passenger.phone}</TableCell>
+                <TableCell sx={{ textAlign: 'center' }}>{passenger.schedulenum}</TableCell>
                 <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(passenger)} /></TableCell>
                 <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(passenger)} /></TableCell>
-                  </TableRow>
-                ))}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

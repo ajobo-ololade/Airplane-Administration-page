@@ -199,13 +199,6 @@ const SignUp = () => {
                                     }}
                                 >
 
-                                    {/* <Button
-                                        variant={'contained'}
-                                        fullWidth
-                                        type='submit'
-                                    >
-                                        {isSubmitting ? <CircularProgress color='secondary' /> : " Sign Up"}
-                                    </Button> */}
                                     <LoadingButton 
                                         type="submit" 
                                         fullWidth 

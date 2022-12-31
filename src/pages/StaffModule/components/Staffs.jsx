@@ -11,7 +11,9 @@ import { DeleteModal, EditModal } from './ModalComp';
 
 
 const Staffs = ({ staffs }) => {
-console.log(staffs);
+    const { STAFF } = useSelector((state) => state.StaffReducers);
+
+  console.log(STAFF);
     const headerData = [
         {
             label: `S/N`,
@@ -86,9 +88,9 @@ console.log(staffs);
                             ))}
                         </TableRow>
                     </TableHead>
-                    {staffs ?
+                    {/* {staffs ? */}
                         <TableBody>
-                            {staffs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((staff, id) => (
+                            {STAFF.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((staff, id) => (
                                 <TableRow key={id}>
                                     <TableCell sx={{ textAlign: 'center' }}>{staff.empnum}</TableCell>
                                     <TableCell sx={{ textAlign: 'center' }}>{staff.surname}</TableCell>
@@ -102,17 +104,17 @@ console.log(staffs);
                                 </TableRow>
                             ))}
                         </TableBody>
-                        :
+                        {/* :
                         <Box sx={{ width: '100%' }}>
                             <LinearProgress />
                         </Box>
-                    }
+                    } */}
                 </Table>
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={staffs.length}
+                count={STAFF.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

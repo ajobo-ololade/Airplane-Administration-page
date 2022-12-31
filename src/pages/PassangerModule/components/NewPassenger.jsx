@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddFlightAction } from '../../../redux/actions/flightAction';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const NewPassenger = () => {
   const [open, setOpen] = React.useState(false);
@@ -16,13 +17,15 @@ const NewPassenger = () => {
   const formik = useFormik({
     initialValues: {
 
-      flightdate: '',
-      origin: '',
-      destination: ''
+      surname: '',
+      othername: '',
+      address: '',
+      phone: '',
+      schedulenum: ''
     },
 
     onSubmit: async (values, { resetForm }) => {
-     
+
       const response = await dispatch(AddFlightAction(values));
       console.log(response);
 
@@ -32,9 +35,11 @@ const NewPassenger = () => {
     },
 
     validationSchema: Yup.object().shape({
-      flightdate: Yup.string().required('Flight date is required'),
-      origin: Yup.string().required('origin is required'),
-      destination: Yup.string().required('Destination Type is required'),
+      surname: Yup.string().required('Surname date is required'),
+      address: Yup.string().required('Address is required'),
+      othername: Yup.string().required('Other name Type is required'),
+      phone: Yup.string().required('Phone No Type is required'),
+      schedulenum: Yup.string().required('Schedule No Type is required'),
     }),
   });
 
@@ -52,125 +57,169 @@ const NewPassenger = () => {
         aria-describedby="modal-modal-description"
       >
         {/* <Container component="main" maxWidth="xs"> */}
-          {/* <Box sx={{ margin: 'auto', padding: '5px' }}>
+        {/* <Box sx={{ margin: 'auto', padding: '5px' }}>
             <Alert severity="success">New airplaine add successfully</Alert>
             <Alert severity="error">Invalid Crediential</Alert>
           </Box> */}
 
-          <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
-            <CardContent>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
+        <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
+          <CardContent>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
 
-                <Avatar sx={{ m: 1, bgcolor: '#1565c0' }}>
-                  {/* <LockOutlinedIcon /> */}
-                </Avatar>
-                <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                  Add New Passenger
-                </Typography>
+              <Avatar sx={{ m: 1, bgcolor: '#1565c0' }}>
+                {/* <LockOutlinedIcon /> */}
+              </Avatar>
+              <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
+                Add New Passenger
+              </Typography>
 
-                <form onSubmit={handleSubmit}>
-                  <Grid container spacing={2} sx={{ marginTop: '5px' }}>
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
 
-                      <TextField
+                    <TextField
 
-                        id='flightdate'
-                        label='Flight Date'
-                        size='small'
-                        type='date'
-                        fullWidth
-                        {...getFieldProps('flightdate')}
-                        error={Boolean(errors.flightdate && touched.flightdate)}
-                        helperText={touched.flightdate && errors.flightdate}
+                      id='surname'
+                      label='Surname'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('surname')}
+                      error={Boolean(errors.surname && touched.surname)}
+                      helperText={touched.surname && errors.surname}
 
-                      />
-                    </Grid>
+                    />
+                  </Grid>
 
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
 
-                      <TextField
+                    <TextField
 
-                        id='origin'
-                        label='Flight Origin'
-                        size='small'
-                        fullWidth
-                        {...getFieldProps('origin')}
-                        error={Boolean(errors.origin && touched.origin)}
-                        helperText={touched.origin && errors.origin}
+                      id='othername'
+                      label='Other Name'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('othername')}
+                      error={Boolean(errors.othername && touched.othername)}
+                      helperText={touched.othername && errors.othername}
 
-                      />
-
-                    </Grid>
-
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
-
-                      <TextField
-
-                        id='destination'
-                        label='Flight Destination'
-                        size='small'
-                        fullWidth
-                        {...getFieldProps('destination')}
-                        error={Boolean(errors.destination && touched.destination)}
-                        helperText={touched.destination && errors.destination}
-
-                      />
-
-                    </Grid>
-
-
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
-
-                      <Button
-                        variant={'contained'}
-                        fullWidth
-                        type='submit'
-                      >
-                        {isSubmitting ? <CircularProgress /> : "Add"}
-                      </Button>
-
-                    </Grid>
+                    />
 
                   </Grid>
 
-                </form>
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
 
-              </Box>
+                    <TextField
+
+                      id='address'
+                      label='Address'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('address')}
+                      error={Boolean(errors.address && touched.address)}
+                      helperText={touched.address && errors.address}
+
+                    />
+
+                  </Grid>
+
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <TextField
+
+                      id='phone'
+                      label='Phone No'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('phone')}
+                      error={Boolean(errors.phone && touched.phone)}
+                      helperText={touched.phone && errors.phone}
+
+                    />
+
+                  </Grid>
+
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <TextField
+
+                      id='schedulenum'
+                      label='Schedule No'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('schedulenum')}
+                      error={Boolean(errors.schedulenum && touched.schedulenum)}
+                      helperText={touched.schedulenum && errors.schedulenum}
+
+                    />
+
+                  </Grid>
+
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <LoadingButton
+                      type="submit"
+                      fullWidth
+                      color="primary"
+                      variant="contained"
+                      loading={isSubmitting}
+                    >
+                      Add
+                    </LoadingButton>
+
+                  </Grid>
+
+                </Grid>
+
+              </form>
+
+            </Box>
 
 
-            </CardContent>
-          </Card>
+          </CardContent>
+        </Card>
         {/* </Container> */}
       </Modals>
     </>

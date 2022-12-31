@@ -4,6 +4,11 @@ import { Home, Article, Settings, Group, Storefront, Person, AccountBox, ModeNig
 import Drawer from '@mui/material/Drawer';
 import PropTypes from 'prop-types';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import GroupsIcon from '@mui/icons-material/Groups';
+import PersonIcon from '@mui/icons-material/Person';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 
 export const DashboardSideBar = ({ }) => {
   const sideContent = [
@@ -15,22 +20,22 @@ export const DashboardSideBar = ({ }) => {
     {
       title: 'Staff',
       path: '/dashboard/staffs',
-      icon: <AccountBox sx={{ color: "white" }} />
+      icon: <PersonIcon sx={{ color: "white" }} />
     },
     {
       title: 'Airplanes',
       path: '/dashboard/airplanes',
-      icon: <DriveFolderUploadIcon sx={{ color: "white" }} />
+      icon: <FlightTakeoffIcon sx={{ color: "white" }} />
     },
     {
       title: 'Flight',
       path: '/dashboard/flights',
-      icon: <Group sx={{ color: "white" }} />
+      icon: <ConnectingAirportsIcon sx={{ color: "white" }} />
     },
     {
       title: 'Passangers',
       path: '/dashboard/passangers',
-      icon: <Article sx={{ color: "white" }} />
+      icon: <GroupsIcon sx={{ color: "white" }} />
     },
     {
       title: 'Log Out',

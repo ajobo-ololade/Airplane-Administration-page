@@ -3,13 +3,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import NewStaff from './components/NewStaff';
 import Staffs from './components/Staffs';
+import { GetStaffAction } from '../../redux/actions/staffAction'
+import { useDispatch } from 'react-redux';
 
 const StaffModules = () => {
 
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //     dispatch(GetStaffAction())    
-  // }, [])
+  const dispatch = useDispatch();
+  useEffect(() => {
+      dispatch(GetStaffAction())    
+  }, [])
 
   return (
     <Grid container sx={{padding: '2rem'}}>

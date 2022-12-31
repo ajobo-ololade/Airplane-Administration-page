@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import { DeleteFlightAction, EditFlightAction } from "../../../redux/actions/flightAction";
-import axios from "axios";
 
 const style = {
     position: 'absolute',
@@ -193,11 +192,8 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 }
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
-    const dispatch = useDispatch();
-    const id = delObj.flightnum
-    const handleDelete = async () => {
-        const data = await dispatch(DeleteFlightAction(id))
-        console.log(id);
+    const handleDelete = () => {
+        console.log(delObj.flightnum);
     }
     return (
         <Modal

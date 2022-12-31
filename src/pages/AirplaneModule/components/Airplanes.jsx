@@ -10,7 +10,7 @@ import { DeleteModal, EditModal } from './ModalComp';
 
 const Airplane = () => {
 
-    const { AIRPLANE } = useSelector((state) => state.AirplaneReducers);
+    const { AIRPLANE, isLoading } = useSelector((state) => state.AirplaneReducers);
 
     // console.log(AIRPLANE);
 
@@ -65,10 +65,11 @@ const Airplane = () => {
     };
     return (
         <>
-            <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
+            <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
             <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
             <TableContainer>
-                {AIRPLANE ?
+                {/* {isLoading === true ? <LinearProgress /> : null} */}
+                
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -93,10 +94,10 @@ const Airplane = () => {
                     </TableBody>
 
                 </Table>
-                 :
+                 {/* :
                 <Box sx={{ width: '100%' }}>
                     <LinearProgress />
-                </Box>}
+                </Box>} */}
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}

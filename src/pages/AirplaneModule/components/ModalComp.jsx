@@ -1,5 +1,11 @@
-import { Avatar, Button, Card, CardContent, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { DeleteAirplaneAction, EditAirplaneAction } from "../../../redux/actions/airplaneActions";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import  LoadingButton  from '@mui/lab/LoadingButton';
 
 const style = {
     position: 'absolute',
@@ -14,7 +20,46 @@ const style = {
     // backgroundColor: 'white'
 };
 
-export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
+export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
+    
+    useEffect(() => {
+        if (editObj) {
+          const { manufacturer,  model, aircraft_type, } = editObj;
+        //   const priviledgeArray = JSON.parse(priviledges);
+          setFieldValue('manufacturer', manufacturer);
+          setFieldValue(' model',  model);
+          setFieldValue('aircraft_type', aircraft_type);
+        }
+      }, [editObj]);
+
+    const dispatch = useDispatch();
+    const formik = useFormik({
+        initialValues: {
+
+            manufacturer: '',
+            model: '',
+            aircraft_type: ''
+        },
+
+        onSubmit: async (values, { resetForm, setSubmitting }) => {
+            values.id = editObj.empnum
+            console.log(values);
+            const response = await dispatch(EditAirplaneAction(values));
+            console.log(response);
+
+            resetForm();
+            handleEditClose();
+
+        },
+
+        validationSchema: Yup.object().shape({
+            model: Yup.string().required('Model is required'),
+            manufacturer: Yup.string().required('Manufacturer is required'),
+            aircraft_type: Yup.string().required('Aircraft Type is required'),
+        }),
+    });
+
+    const { handleSubmit, errors, touched, setFieldValue, resetForm, values, isSubmitting, handleBlur, handleChange } = formik
     return (
         <Modal
             open={editOpen}
@@ -39,8 +84,8 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
                                 Add New Airplane
                             </Typography>
 
-                            <form>
-                                {/* onSubmit={handleSubmit} */}
+                            <form onSubmit={handleSubmit}>
+                                
                                 <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
                                     <Grid item xs={12}
@@ -53,36 +98,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
 
                                         <TextField
 
-                                            id='username'
-                                            label='Numser'
-                                            size='small'
-                                            fullWidth
-                                            defaultValue={editObj.numser}
-                                        // {...getFieldProps('username')}
-                                        // error={Boolean(errors.username && touched.username)}
-                                        // helperText={touched.username && errors.username}
-
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={12}
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-
-                                        <TextField
-
-                                            id='email'
+                                            id='manufacturer'
                                             label='Manufacturer'
                                             size='small'
                                             fullWidth
-                                            defaultValue={editObj.manufacturer}
-                                        // {...getFieldProps('email')}
-                                        // error={Boolean(errors.email && touched.email)}
-                                        // helperText={touched.email && errors.email}
+                                            value={values.manufacturer}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.manufacturer && touched.manufacturer)}
+                                            helperText={touched.manufacturer && errors.manufacturer}
 
                                         />
                                     </Grid>
@@ -96,15 +120,16 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
                                     >
 
                                         <TextField
-
-                                            id='category'
+                                        
+                                            id='model'
                                             label='Model'
                                             size='small'
                                             fullWidth
-                                            defaultValue={editObj.model}
-                                        // {...getFieldProps('category')}
-                                        // error={Boolean(errors.category && touched.category)}
-                                        // helperText={touched.category && errors.category}
+                                            value={values.model}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.model && touched.model)}
+                                            helperText={touched.model && errors.model}
 
                                         />
 
@@ -120,14 +145,16 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
 
                                         <TextField
 
-                                            id='email'
+
+                                            id='aircraf_type'
                                             label='Aircraft Type'
                                             size='small'
                                             fullWidth
-                                            defaultValue={editObj.aircraft_type}
-                                        // {...getFieldProps('email')}
-                                        // error={Boolean(errors.email && touched.email)}
-                                        // helperText={touched.email && errors.email}
+                                            value={values.aircraft_type}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.aircraft_type && touched.aircraft_type)}
+                                            helperText={touched.aircraft_type && errors.aircraft_type}
 
                                         />
 
@@ -141,13 +168,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
                                         }}
                                     >
 
-                                        <Button
-                                            variant={'contained'}
-                                            fullWidth
-                                            type='submit'
-                                        >
-                                            Update
-                                        </Button>
+<LoadingButton
+                      type="submit"
+                      fullWidth
+                      color="primary"
+                      variant="contained"
+                      loading={isSubmitting}
+                    >
+                      Update
+                    </LoadingButton>
 
                                     </Grid>
 
@@ -166,8 +195,21 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
 }
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
-    const handleDelete = () => {
-        console.log(delObj.model);
+    useEffect(() => {
+        // if (editObj) {
+        //   const { manufacturer,  model, aircraft_type, } = editObj;
+        // //   const priviledgeArray = JSON.parse(priviledges);
+        //   setFieldValue('manufacturer', manufacturer);
+        //   setFieldValue(' model',  model);
+        //   setFieldValue('aircraft_type', aircraft_type);
+        // }
+      }, [delObj]);
+
+    const dispatch = useDispatch();
+    console.log(delObj.numser);
+    const handleDelete = async () => {
+        const response = await dispatch(DeleteAirplaneAction(delObj.numser))
+        console.log(response);
     }
     return (
         <Modal
@@ -187,6 +229,7 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
                                 color="success"
                                 fullWidth
                                 onClick={handleDelete}
+                                // onClose={onClose}
                             >
                                 Yes
                             </Button>

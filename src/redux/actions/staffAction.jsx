@@ -1,23 +1,21 @@
 import axios from "axios";
-import { addAirplaneRequest, deleteAirplaneRequest, editAirplaneRequest, getAirplaneRequest } from "../../api/airplaneRequests";
-import { airplaneActionTypes, messageActionType } from "../types";
-// import axios from ".";
-// import axios from "../../api";
+import { addPasssengerRequest, deletePasssengerRequest, editPasssengerRequest, getPasssengerRequest } from "../../api/passengerRequest";
+import { staffActionTypes, messageActionType } from "../types";
 
-export const GetAirplaneAction = () => async (dispatch) => {
+export const GetStaffAction = () => async (dispatch) => {
 
     try {
-        const response = await getAirplaneRequest();
-        // console.log(response.airplane);
+        const response = await getPasssengerRequest();
+        // console.log(response.Staff);
         
         return dispatch({
-            type: airplaneActionTypes.GET_AIRPLANE,
-            payload: response?.airplane,
+            type: staffActionTypes.GET_STAFF,
+            payload: response?.staff,
         })
 
 
 
-        //     const response = await getAirplaneRequest();
+        //     const response = await getStaffRequest();
         //     console.log(response);
 
         //     if (response?.status === 200) {
@@ -33,9 +31,9 @@ export const GetAirplaneAction = () => async (dispatch) => {
 
 }
 
-export const AddAirplaneAction = (obj) => async (dispatch) => {
+export const AddStaffAction = (obj) => async (dispatch) => {
     try{
-        const response = await addAirplaneRequest(obj);
+        const response = await addPasssengerRequest(obj);
         // console.log(response.message);
         if(response?.message === true){
 
@@ -44,7 +42,7 @@ export const AddAirplaneAction = (obj) => async (dispatch) => {
                 payload: response.message,
             })
 
-            dispatch(GetAirplaneAction())
+            dispatch(GetStaffAction())
         }
 
     }catch(error) {
@@ -52,10 +50,10 @@ export const AddAirplaneAction = (obj) => async (dispatch) => {
  }
 }
 
-export const EditAirplaneAction = (value) => async (dispatch) => {
+export const EditStaffAction = (value) => async (dispatch) => {
 
     try{
-        const response = await editAirplaneRequest(value);
+        const response = await editPasssengerRequest(value);
         console.log(response.message);
         if(response?.message === true){
 
@@ -64,7 +62,7 @@ export const EditAirplaneAction = (value) => async (dispatch) => {
                 payload: response.message,
             })
 
-            dispatch(GetAirplaneAction())
+            dispatch(GetStaffAction())
         }
 
     }catch(error) {
@@ -72,10 +70,10 @@ export const EditAirplaneAction = (value) => async (dispatch) => {
  }
 }
 
-export const DeleteAirplaneAction = (value) => async (dispatch) => {
+export const DeleteStaffAction = (value) => async (dispatch) => {
     
     try{
-        const response = await deleteAirplaneRequest(value);
+        const response = await deletePasssengerRequest(value);
         console.log(response.message);
         if(response?.message === true){
 
@@ -84,7 +82,7 @@ export const DeleteAirplaneAction = (value) => async (dispatch) => {
                 payload: response.message,
             })
 
-            dispatch(GetAirplaneAction())
+            dispatch(GetStaffAction())
         }
 
     }catch(error) {

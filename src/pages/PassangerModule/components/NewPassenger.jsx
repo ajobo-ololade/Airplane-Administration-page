@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddFlightAction } from '../../../redux/actions/flightAction';
 
-const NewFlights = () => {
+const NewPassenger = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,7 +43,7 @@ const NewFlights = () => {
   return (
     <>
       <Button variant="contained" color="success" onClick={handleOpen}>
-        <AddIcon /> New Flight
+        <AddIcon /> New Passenger
       </Button>
       <Modals
         open={open}
@@ -71,7 +71,7 @@ const NewFlights = () => {
                   {/* <LockOutlinedIcon /> */}
                 </Avatar>
                 <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                  Add New Flight
+                  Add New Passenger
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
@@ -177,4 +177,4 @@ const NewFlights = () => {
   )
 }
 
-export default NewFlights
+export default NewPassenger

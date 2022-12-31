@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Avatar, Button, TextField, Grid, Link, Typography, IconButton, InputAdornment, MenuItem } from '@mui/material';
+import { Avatar, Button, TextField, Grid, Link, Typography, IconButton, InputAdornment, MenuItem, CircularProgress } from '@mui/material';
 // import { Icon } from '@iconify/react';
 import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
@@ -9,32 +9,42 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { GetPassengerAction } from '../../redux/actions/passengerAction'
+import { signUpAction } from '../../redux/actions/authAction';
+import  LoadingButton  from '@mui/lab/LoadingButton';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 const SignUp = () => {
 
+    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false);
     const formik = useFormik({
         initialValues: {
-            username: ``,
-            password: '',
+            first_name: ``,
+            last_name: ``,
+            user_name: ``,
             email: '',
-            category: ''
+            password: '',
         },
 
         onSubmit: async (values, { resetForm }) => {
             console.log(values);
-            
+            // const data = await dispatch(signUpAction(values))
+            const data = await axios.post(`http://127.0.0.1:8000/api/register`, values)
+            console.log(data);
         },
 
         validationSchema: Yup.object().shape({
-            username: Yup.string().required('Username is required'),
+            first_name: Yup.string().required('First name is required'),
+            last_name: Yup.string().required('Last name is required'),
+            user_name: Yup.string().required('Username is required'),
             email: Yup.string().required('Email is required'),
             password: Yup.string().required('Password is required'),
-            category: Yup.string().required('Category is required'),
         }),
     });
 
-    const { handleSubmit, errors, touched, getFieldProps, resetForm } = formik
+    const { handleSubmit, errors, touched, getFieldProps, resetForm, isSubmitting } = formik
     const handleShowPassword = () => {
         setShowPassword((show) => !show);
     };
@@ -75,13 +85,57 @@ const SignUp = () => {
 
                                     <TextField
 
-                                        id='username'
+                                        id='first_name'
+                                        label='First Name'
+                                        size='small'
+                                        fullWidth
+                                        {...getFieldProps('first_name')}
+                                        error={Boolean(errors.first_name && touched.first_name)}
+                                        helperText={touched.first_name && errors.first_name}
+
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                >
+
+                                    <TextField
+
+                                        id='last_name'
+                                        label='Last Name'
+                                        size='small'
+                                        fullWidth
+                                        {...getFieldProps('last_name')}
+                                        error={Boolean(errors.last_name && touched.last_name)}
+                                        helperText={touched.last_name && errors.last_name}
+
+                                    />
+                                </Grid>
+
+
+
+                                <Grid item xs={12}
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                >
+
+                                    <TextField
+
+                                        id='user_name'
                                         label='Username'
                                         size='small'
                                         fullWidth
-                                        {...getFieldProps('username')}
-                                        error={Boolean(errors.username && touched.username)}
-                                        helperText={touched.username && errors.username}
+                                        {...getFieldProps('user_name')}
+                                        error={Boolean(errors.user_name && touched.user_name)}
+                                        helperText={touched.user_name && errors.user_name}
 
                                     />
                                 </Grid>
@@ -106,28 +160,6 @@ const SignUp = () => {
                                         helperText={touched.email && errors.email}
 
                                     />
-                                </Grid>
-
-                                <Grid item xs={12}
-                                    sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                    }}
-                                >
-
-                                    <TextField
-
-                                        id='category'
-                                        label='Category'
-                                        size='small'
-                                        fullWidth
-                                        {...getFieldProps('category')}
-                                        error={Boolean(errors.category && touched.category)}
-                                        helperText={touched.category && errors.category}
-
-                                    />
-                                    
                                 </Grid>
 
                                 <Grid item xs={12}
@@ -167,13 +199,22 @@ const SignUp = () => {
                                     }}
                                 >
 
-                                    <Button
+                                    {/* <Button
                                         variant={'contained'}
                                         fullWidth
                                         type='submit'
                                     >
-                                        Sign Up
-                                    </Button>
+                                        {isSubmitting ? <CircularProgress color='secondary' /> : " Sign Up"}
+                                    </Button> */}
+                                    <LoadingButton 
+                                        type="submit" 
+                                        fullWidth 
+                                        color="primary" 
+                                        variant="contained" 
+                                        loading={isSubmitting}
+                                    >
+                                        Sign up
+                                    </LoadingButton>
 
                                 </Grid>
 

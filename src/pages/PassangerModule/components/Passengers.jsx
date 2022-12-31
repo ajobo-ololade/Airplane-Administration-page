@@ -4,29 +4,42 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
 import { TableRows } from '@mui/icons-material';
-import { DeleteModal, EditModal } from './ModalComp';
 import { useSelector } from 'react-redux';
+import { DeleteModal, EditModal } from '../../FlightModule/components/ModalComp';
 
-const Flights = () => {
-  const { FLIGHT, isLoading } = useSelector((state) => state.FlightReducers);
+const Passengers = () => {  
+  const { PASSENGER } = useSelector((state) => state.PassengerReducers);
+
+  console.log(PASSENGER);
 
   const headerData = [
     {
-      label: 'flight number',
+      label: 'S/N',
     },
     {
-      label: 'flight date',
+        label: 'Pass ID',
+      },
+    {
+      label: 'Surname',
     },
     {
-      label: 'origin',
+      label: 'Other Name',
     },
     {
-      label: 'destination',
+      label: 'Address',
+    },
+    
+    {
+      label: 'Phone No',
+    },
+    
+    {
+      label: 'Schedule No',
     },
     {
       label: 'Edit',
     },
-    {
+     {
       label: 'Delete',
     },
   ];
@@ -61,37 +74,40 @@ const Flights = () => {
   };
   return (
     <>
-      <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
-      <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+    <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
+    <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               {headerData.map((data, id) => (
-                <TableCell key={id} sx={{ textAlign: 'center', textTransform: 'capitalize' }}>
+                <TableCell key={id} sx={{textAlign: 'center'}}>
                   {data.label}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {FLIGHT.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((flight, id) => (
-              <TableRow key={id}>
-                <TableCell sx={{ textAlign: 'center' }}>{flight.flightnum}</TableCell>
-                <TableCell sx={{ textAlign: 'center' }}>{flight.flightdate}</TableCell>
-                <TableCell sx={{ textAlign: 'center' }}>{flight.origin}</TableCell>
-                <TableCell sx={{ textAlign: 'center' }}>{flight.destination}</TableCell>
-                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(flight)} /></TableCell>
-                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(flight)} /></TableCell>
-              </TableRow>
-            ))}
+          {PASSENGER.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((passenger, id) => (
+                  <TableRow key={id}>
+                    <TableCell sx={{textAlign: 'center'}}>{id+1}</TableCell>
+                    <TableCell sx={{textAlign: 'center'}}>{passenger.pasID}</TableCell>
+                    <TableCell sx={{textAlign: 'center'}}>{passenger.surname}</TableCell>
+                    <TableCell sx={{textAlign: 'center'}}>{passenger.othername}</TableCell>
+                    <TableCell sx={{textAlign: 'center'}}>{passenger.address}</TableCell>
+                    <TableCell sx={{textAlign: 'center'}}>{passenger.phone}</TableCell>
+                    <TableCell sx={{textAlign: 'center'}}>{passenger.schedulenum}</TableCell>
+                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(passenger)} /></TableCell>
+                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(passenger)} /></TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={FLIGHT.length}
+        count={PASSENGER.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -101,4 +117,4 @@ const Flights = () => {
   )
 }
 
-export default Flights
+export default Passengers

@@ -38,6 +38,7 @@ export const signUpAction = (obj) => async (dispatch) => {
   try{
 
       const data = await signUpRequest(obj);
+      console.log(data);
       
       // extract success
       // if (data?.success) {

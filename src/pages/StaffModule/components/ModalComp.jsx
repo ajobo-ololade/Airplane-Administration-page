@@ -1,5 +1,10 @@
-import { Avatar, Button, Card, CardContent, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useDispatch, useSelector } from 'react-redux';
+import { EditAirplaneAction } from "../../../redux/actions/airplaneActions";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useEffect } from "react";
 
 const style = {
     position: 'absolute',
@@ -14,7 +19,49 @@ const style = {
     // backgroundColor: 'white'
 };
 
-export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
+export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose }) => {
+    useEffect(() => {
+        if (editObj) {
+          const { surname,  name, address, phone, ratingid, salary } = editObj;
+          setFieldValue('surname', surname);
+          setFieldValue('name',  name);
+          setFieldValue('address', address);
+          setFieldValue('phone', phone);
+          setFieldValue('ratingid', ratingid);
+          setFieldValue('salary', salary);
+        }
+      }, [editObj]);
+    const dispatch = useDispatch();
+    const formik = useFormik({
+        initialValues: {
+            surname: '',
+            name: '',
+            address: '',
+            phone: '',
+            ratingid: '',
+            salary: ''
+        },
+
+        onSubmit: async (values, { resetForm, setSubmitting }) => {
+            const response = await dispatch(EditAirplaneAction(values));
+            console.log(response);
+
+            resetForm();
+            handleClose();
+
+        },
+
+        validationSchema: Yup.object().shape({
+            surname: Yup.string().required('Surname is required'),
+            name: Yup.string().required('Name is required'),
+            address: Yup.string().required('Address is required'),
+            phone: Yup.string().required('Phone is required'),
+            ratingid: Yup.string().required('Rating Id is required'),
+            salary: Yup.string().required('Salary is required'),
+        }),
+    });
+
+    const { handleSubmit, errors, touched, setFieldValue, values, handleBlur, handleChange, isSubmitting } = formik
     return (
         <Modal
             open={editOpen}
@@ -39,8 +86,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
                                 Add New Airplane
                             </Typography>
 
-                            <form>
-                                {/* onSubmit={handleSubmit} */}
+                            <form onSubmit={handleSubmit}>
                                 <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
                                     <Grid item xs={12}
@@ -53,14 +99,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
 
                                         <TextField
 
-                                            id='username'
-                                            label='Numser'
+                                            id='surname'
+                                            label='Surname'
                                             size='small'
                                             fullWidth
-                                            defaultValue={editObj.numser}
-                                        // {...getFieldProps('username')}
-                                        // error={Boolean(errors.username && touched.username)}
-                                        // helperText={touched.username && errors.username}
+                                            value={values.surname}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.surname && touched.surname)}
+                                            helperText={touched.surname && errors.surname}
 
                                         />
                                     </Grid>
@@ -75,36 +122,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
 
                                         <TextField
 
-                                            id='email'
-                                            label='Manufacturer'
+                                            id='name'
+                                            label='Name'
                                             size='small'
                                             fullWidth
-                                            defaultValue={editObj.manufacturer}
-                                        // {...getFieldProps('email')}
-                                        // error={Boolean(errors.email && touched.email)}
-                                        // helperText={touched.email && errors.email}
-
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={12}
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-
-                                        <TextField
-
-                                            id='category'
-                                            label='Model'
-                                            size='small'
-                                            fullWidth
-                                            defaultValue={editObj.model}
-                                        // {...getFieldProps('category')}
-                                        // error={Boolean(errors.category && touched.category)}
-                                        // helperText={touched.category && errors.category}
+                                            value={values.name}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.name && touched.name)}
+                                            helperText={touched.name && errors.name}
 
                                         />
 
@@ -120,18 +146,95 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
 
                                         <TextField
 
-                                            id='email'
-                                            label='Aircraft Type'
+                                            id='address'
+                                            label='Address'
                                             size='small'
                                             fullWidth
-                                            defaultValue={editObj.aircraft_type}
-                                        // {...getFieldProps('email')}
-                                        // error={Boolean(errors.email && touched.email)}
-                                        // helperText={touched.email && errors.email}
+                                            value={values.address}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.address && touched.address)}
+                                            helperText={touched.address && errors.address}
 
                                         />
 
                                     </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='phone'
+                                            label='Phone'
+                                            type='number'
+                                            size='small'
+                                            fullWidth
+                                            value={values.phone}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.phone && touched.phone)}
+                                            helperText={touched.phone && errors.phone}
+
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='ratingid'
+                                            label='Rating Id'
+                                            type='number'
+                                            size='small'
+                                            fullWidth
+                                            value={values.ratingid}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.ratingid && touched.ratingid)}
+                                            helperText={touched.ratingid && errors.ratingid}
+
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='salary'
+                                            label='Salary'
+                                            size='small'
+                                            type='number'
+                                            fullWidth
+                                            value={values.salary}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.salary && touched.salary)}
+                                            helperText={touched.salary && errors.salary}
+
+                                        />
+
+                                    </Grid>
+
 
                                     <Grid item xs={12}
                                         sx={{
@@ -146,7 +249,8 @@ export const EditModal = ({ editOpen = "false", onClose, editObj }) => {
                                             fullWidth
                                             type='submit'
                                         >
-                                            Update
+                                            {isSubmitting ? <CircularProgress /> : "Update"}
+                                            {/* Add */}
                                         </Button>
 
                                     </Grid>

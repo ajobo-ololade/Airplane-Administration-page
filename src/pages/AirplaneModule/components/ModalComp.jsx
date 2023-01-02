@@ -1,6 +1,6 @@
 import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { DeleteAirplaneAction, EditAirplaneAction } from "../../../redux/actions/airplaneActions";
+import { DeleteAirplaneAction, EditAirplaneAction, GetAirplaneAction } from "../../../redux/actions/airplaneActions";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -42,10 +42,11 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.empnum
+            console.log(editObj.numser);
+            // values.numser = editObj.numser
             console.log(values);
-            const response = await dispatch(EditAirplaneAction(values));
-            console.log(response);
+            const response = await dispatch(EditAirplaneAction(editObj.numser, values));
+            dispatch(GetAirplaneAction());
 
             resetForm();
             handleEditClose();
@@ -218,7 +219,7 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     console.log(delObj.numser);
     const handleDelete = async () => {
         const response = await dispatch(DeleteAirplaneAction(delObj.numser))
-        console.log(response);
+        dispatch(GetAirplaneAction());
     }
     return (
         <Modal

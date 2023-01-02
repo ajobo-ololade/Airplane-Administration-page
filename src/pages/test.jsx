@@ -1,76 +1,36 @@
-import { useState } from "react";
-import { Data } from "./Data";
-import "./styles.css";
-import { useDispatch, useSelector } from 'react-redux';
-import PieChart from "../components/PieChart";
+import React from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
 
-export default function App() {
-    // utils/Data.js
-    
-    
-    // const {FLIGHT} = useSelector((state) => state.FlightReducer)
-    const Data = [
-        {
-          label: "Flight",
-          data: 2016,
-        },
-        {
-            label: "Flight",
-            data: 2016,
-        },
-        {
-            label: "Flight",
-            data: 2016,
-        },
-        {
-            label: "Flight",
-            data: 2016,
-        },
-        {
-            label: "Flight",
-            data: 2016,
-        }
-      ];
-    
-      const data = {
-        labels: ['Red', 'Orange', 'Blue'],
-        // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
-        datasets: [
-            {
-              label: 'Popularity of colours',
-              data: [55, 23, 96],
-              // you can set indiviual colors for each bar
-              backgroundColor: [
-                'rgba(255, 255, 255, 0.6)',
-                'rgba(255, 255, 255, 0.6)',
-                'rgba(255, 255, 255, 0.6)',
-              ],
-              borderWidth: 1,
-            }
-        ]
-    }
-  const [chartData, setChartData] = useState({
-    labels: Data.map((data) => data.label), 
-    datasets: [
-      {
-        label: "Users Gained ",
-        data: Data.map((data) => data.data),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0"
-        ],
-        borderColor: "black",
-        borderWidth: 2
-      }
-    ]
-  });
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-  return (
-    <div className="App">
-      <PieChart chartData={chartData} />
-    </div>
-  );
+
+export function ChartTest() {
+    const data = {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [
+        {
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+  return <Pie data={data} />;
 }

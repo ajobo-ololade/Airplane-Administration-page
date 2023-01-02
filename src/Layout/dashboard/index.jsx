@@ -45,9 +45,9 @@ function DashboardLayout(props) {
   ]
 
   return (
-    <Grid container sx={{height: '100vh',}}>
-      <Grid item xs={2} sm={2} sx={{ display: { xs: "none", sm: 'block', lg: 'block' }, backgroundColor: 'primary.main', color: 'white' }}>
-        <SwipeableDrawer anchor='left' open={open} onClose={() => setOpen(false)} sx={{ width: { xs: '50%', lg: '0%' }, padding: '2rem', overflowY: 'auto' }}>
+    <Grid container sx={{height: 650, lg:{overflow:'hidden'}}}>
+      <Grid item xs={2} sm={2} sx={{ display: { xs: "none", sm: 'block', lg: 'block' }, backgroundColor: 'primary.main', color: 'white', height: '100%' }}>
+        <SwipeableDrawer anchor='left' open={open} onClose={() => setOpen(false)} sx={{ width: { xs: '50%', lg: '0%' }, padding: '2rem', overflowY: 'scroll' }}>
           <Box>
             {sideContent.map(({ title, path, icon }) => (
               <List>
@@ -70,8 +70,8 @@ function DashboardLayout(props) {
           <Grid item xs={12}>
             <DashboardNavBar setOpen={setOpen} />
           </Grid>
-          <Grid item xs={12} sx={{ }}>
-            <Outlet style={{height: '100%', overflowY: 'auto'}}/>
+          <Grid item xs={12} sx={{height: 600, overflowY: 'scrol'}}>
+            <Outlet />
           </Grid>
         </Grid>
       </Grid>

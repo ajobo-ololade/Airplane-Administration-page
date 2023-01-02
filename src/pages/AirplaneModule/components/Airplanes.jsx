@@ -44,6 +44,7 @@ const Airplane = () => {
     const [delObj, setDelObj] = React.useState({});
     const edit = (e) => {
         setEditObj(e)
+        console.log(e);
         handleEditOpen()
     }
     const del = (e) => {
@@ -67,10 +68,10 @@ const Airplane = () => {
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
             <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
-            <TableContainer>
+            <TableContainer sx={{ height: 400, overflowY: 'auto' }}>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ minWidth: 650,}} aria-label="simple table" >
                     <TableHead>
                         <TableRow>
                             {headerData.map((data, id) => (

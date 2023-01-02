@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
-import { DeleteFlightAction, EditFlightAction } from "../../../redux/actions/flightAction";
+import { DeleteFlightAction, EditFlightAction, GetFlightAction } from "../../../redux/actions/flightAction";
 import axios from "axios";
 
 const style = {
@@ -41,10 +41,10 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.flightnum
+            values.flightnum = editObj.flightnum
             console.log(values);
             const response = await dispatch(EditFlightAction(values));
-            console.log(response);
+            dispatch(GetFlightAction());
 
             resetForm();
             handleEditClose();
@@ -194,10 +194,11 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     const dispatch = useDispatch();
-    const id = delObj.flightnum
     const handleDelete = async () => {
-        const data = await dispatch(DeleteFlightAction(id))
-        console.log(id);
+        const flightnum = delObj.flightnum
+        const data = await dispatch(DeleteFlightAction(flightnum));
+        console.log(data);
+        dispatch(GetFlightAction());
     }
     return (
         <Modal

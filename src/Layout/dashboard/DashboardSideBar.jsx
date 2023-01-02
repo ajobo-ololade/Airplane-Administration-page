@@ -14,7 +14,7 @@ export const DashboardSideBar = ({ }) => {
   const sideContent = [
     {
       title: 'Dashboard',
-      path: '/dashboard/index',
+      path: '/dashboard/dashboard',
       icon: <Home sx={{ color: "white" }} />
     },
     {
@@ -46,7 +46,7 @@ export const DashboardSideBar = ({ }) => {
 
   return (
     <>
-      <Box position="fixe" sx={{ marginTop: '60px', }} >
+      <Box position="fixe" sx={{ marginTop: '60px', height: 600, overflowY: 'auto', }} >
         {sideContent.map(({ title, path, icon }) => (
           <List>
             <ListItem disablePadding>

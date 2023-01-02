@@ -2,7 +2,7 @@ import { flightActionTypes, isLoadingType, messageActionType } from "../types"
 
 const initialState = {
     successMessage: '',
-    isLoading: false,
+    errorMessage: '',
     FLIGHT: [],
 
 }
@@ -11,10 +11,10 @@ export const FlightReducers = (state = initialState, { type, payload }) => {
     // console.log(payload);
     switch (type) {
 
-        case isLoadingType.IS_LOADING:
+        case messageActionType.SUCCESS_MESSAGE:
             return {
                 ...state,
-                isLoading: true,
+                succcessMessage: "Flight created successfully",
             }
 
         case flightActionTypes.GET_FLIGHT:
@@ -24,11 +24,12 @@ export const FlightReducers = (state = initialState, { type, payload }) => {
                 isloading: false
             }
 
-        case messageActionType.SUCCESS_MESSAGE:
-            return {
-                ...state,
-                succcessMessage: "Flight add successfully",
-            }
+            case messageActionType.Error_MESSAGE:
+                return {
+                    ...state,
+                    errorMessage: "Invalid Credentials",
+                }
+
 
         default:
             return state;

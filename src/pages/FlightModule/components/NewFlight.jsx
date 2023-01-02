@@ -1,17 +1,22 @@
 import { Alert, Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Grid, MenuItem, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddFlightAction } from '../../../redux/actions/flightAction';
+import { AddFlightAction, GetFlightAction } from '../../../redux/actions/flightAction';
+import { useNavigate } from 'react-router-dom';
 
 const NewFlights = () => {
+  const { successMessage, errorMessage } = useSelector((state) => state.AuthReducers)
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const [sMessage, setSMessage] = useState(false);
+  const [eMessage, setEMessage] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -21,13 +26,29 @@ const NewFlights = () => {
       destination: ''
     },
 
-    onSubmit: async (values, { resetForm }) => {
-     
-      const response = await dispatch(AddFlightAction(values));
-      console.log(response);
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
 
-      resetForm();
-      handleClose();
+      const data = await dispatch(AddFlightAction(values));
+      console.log(data.message);
+      if (data.message === true) {
+        setSubmitting(true);
+        setSMessage(true);
+        dispatch(GetFlightAction());
+        setTimeout(() => {
+          navigate("/signIn")
+        }, 3000);
+        resetForm()
+        handleClose();
+      }
+      else {
+        setEMessage(true)
+        setTimeout(() => {
+          setEMessage(false)
+        }, 3000);
+      }
+      setSubmitting(false)
+
+      // resetForm();
 
     },
 
@@ -52,125 +73,133 @@ const NewFlights = () => {
         aria-describedby="modal-modal-description"
       >
         {/* <Container component="main" maxWidth="xs"> */}
-          {/* <Box sx={{ margin: 'auto', padding: '5px' }}>
-            <Alert severity="success">New airplaine add successfully</Alert>
-            <Alert severity="error">Invalid Crediential</Alert>
-          </Box> */}
+        <Box sx={{ margin: 'auto', padding: '5px', position: 'relative' }}>
+          {sMessage ?
+            <Alert severity="success" sx={{ position: 'absolute', top: '10' }}>{successMessage}</Alert>
+            :
+            eMessage ?
+              <Alert severity="error" sx={{ position: 'absolute', top: '10' }}>{errorMessage}</Alert>
+              :
+              null
+          }
+        </Box>
 
-          <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
-            <CardContent>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
+        <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
+          <CardContent>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
 
-                <Avatar sx={{ m: 1, bgcolor: '#1565c0' }}>
-                  {/* <LockOutlinedIcon /> */}
-                </Avatar>
-                <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                  Add New Flight
-                </Typography>
+              <Avatar sx={{ m: 1, bgcolor: '#1565c0' }}>
+                {/* <LockOutlinedIcon /> */}
+              </Avatar>
+              <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
+                Add New Flight
+              </Typography>
 
-                <form onSubmit={handleSubmit}>
-                  <Grid container spacing={2} sx={{ marginTop: '5px' }}>
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
 
-                      <TextField
+                    <TextField
 
-                        id='flightdate'
-                        label='Flight Date'
-                        size='small'
-                        type='date'
-                        fullWidth
-                        {...getFieldProps('flightdate')}
-                        error={Boolean(errors.flightdate && touched.flightdate)}
-                        helperText={touched.flightdate && errors.flightdate}
+                      id='flightdate'
+                      label='Flight Date'
+                      size='small'
+                      type='date'
+                      fullWidth
+                      {...getFieldProps('flightdate')}
+                      error={Boolean(errors.flightdate && touched.flightdate)}
+                      helperText={touched.flightdate && errors.flightdate}
 
-                      />
-                    </Grid>
+                    />
+                  </Grid>
 
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
 
-                      <TextField
+                    <TextField
 
-                        id='origin'
-                        label='Flight Origin'
-                        size='small'
-                        fullWidth
-                        {...getFieldProps('origin')}
-                        error={Boolean(errors.origin && touched.origin)}
-                        helperText={touched.origin && errors.origin}
+                      id='origin'
+                      label='Flight Origin'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('origin')}
+                      error={Boolean(errors.origin && touched.origin)}
+                      helperText={touched.origin && errors.origin}
 
-                      />
-
-                    </Grid>
-
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
-
-                      <TextField
-
-                        id='destination'
-                        label='Flight Destination'
-                        size='small'
-                        fullWidth
-                        {...getFieldProps('destination')}
-                        error={Boolean(errors.destination && touched.destination)}
-                        helperText={touched.destination && errors.destination}
-
-                      />
-
-                    </Grid>
-
-
-                    <Grid item xs={12}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
-
-                      <Button
-                        variant={'contained'}
-                        fullWidth
-                        type='submit'
-                      >
-                        {isSubmitting ? <CircularProgress /> : "Add"}
-                      </Button>
-
-                    </Grid>
+                    />
 
                   </Grid>
 
-                </form>
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
 
-              </Box>
+                    <TextField
+
+                      id='destination'
+                      label='Flight Destination'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('destination')}
+                      error={Boolean(errors.destination && touched.destination)}
+                      helperText={touched.destination && errors.destination}
+
+                    />
+
+                  </Grid>
 
 
-            </CardContent>
-          </Card>
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <LoadingButton
+                      type="submit"
+                      fullWidth
+                      color="primary"
+                      variant="contained"
+                      loading={isSubmitting}
+                    >
+                      Sign up
+                    </LoadingButton>
+
+                  </Grid>
+
+                </Grid>
+
+              </form>
+
+            </Box>
+
+
+          </CardContent>
+        </Card>
         {/* </Container> */}
       </Modals>
     </>

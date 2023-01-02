@@ -5,7 +5,7 @@ import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { AddAirplaneAction } from '../../../redux/actions/airplaneActions';
+import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/airplaneActions';
 import { useDispatch, useSelector } from 'react-redux';
 import  LoadingButton  from '@mui/lab/LoadingButton';
 
@@ -24,7 +24,7 @@ const NewAirplane = () => {
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
       const response = await dispatch(AddAirplaneAction(values));
-      console.log(response);
+      dispatch(GetAirplaneAction());
 
       resetForm();
       handleClose();

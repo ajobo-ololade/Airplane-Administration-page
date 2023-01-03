@@ -7,6 +7,10 @@ import FlightModules from './pages/FlightModule';
 import StaffModules from './pages/StaffModule';
 import Dashboard from './pages/Dashboard';
 import PassengerModules from './pages/PassangerModule';
+import CrewModule from './pages/CrewModule';
+import AirplaneTypeModule from './pages/AirplaneTypeModule';
+import RatingModule from './pages/RatingModule';
+import ScheduleModule from './pages/ScheduleModule';
 
 function App() {
   return (
@@ -22,6 +26,10 @@ function App() {
         <Route path="/dashboard/passangers" element={<PassengerModules />} />
         <Route path="/dashboard/staffs" element={<StaffModules />} />
         <Route path="/dashboard/airplanes" element={<AirplaneModule />} />
+        <Route path="/dashboard/crews" element={<CrewModule />} />
+        <Route path="/dashboard/airplanetypes" element={<AirplaneTypeModule />} />
+        <Route path="/dashboard/ratings" element={<RatingModule />} />
+        <Route path="/dashboard/schedules" element={<ScheduleModule />} />
       </Route>
     </Routes>
     </>

@@ -8,24 +8,36 @@ import Modals from '../../../components/Modal';
 import { DeleteModal, EditModal } from './ModalComp';
 
 
-const Airplane = () => {
+const Schedule = () => {
 
-    const { AIRPLANE, isLoading } = useSelector((state) => state.AirplaneReducers);
+    const { SCHEDULE } = useSelector((state) => state.ScheduleReducers);
 
     // console.log(AIRPLANE);
 
     const headerData = [
         {
-            label: `numser`,
+            label: `airplane id`,
         },
         {
-            label: `manufacturer`,
+            label: `arriver`,
         },
         {
-            label: `model`,
+            label: `arriver time`,
         },
         {
-            label: `aircraft Type`,
+            label: `capacity`,
+        },
+        {
+            label: `departure time`,
+        },
+        {
+            label: `destination`,
+        },
+        {
+            label: `flight num`,
+        },
+        {
+            label: `schedule num`,
         },
         {
             label: 'Edit',
@@ -68,7 +80,7 @@ const Airplane = () => {
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
             <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
-            <TableContainer>
+            <TableContainer sx={{ height: 400, overflowY: 'auto' }}>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 
                 <Table sx={{ minWidth: 650,}} aria-label="simple table" >
@@ -82,14 +94,18 @@ const Airplane = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {AIRPLANE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((airplane, id) => (
+                        {SCHEDULE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((schedule, id) => (
                             <TableRow key={id}>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.numser}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.manufacturer}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.model}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.aircraft_type}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(airplane)} /></TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(airplane)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.airplaneid}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.arr}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.arr_time}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.capacity}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.dep_time}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.des}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.flightnum}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.schedulenum}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(schedule)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(schedule)} /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -103,7 +119,7 @@ const Airplane = () => {
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={AIRPLANE.length}
+                count={SCHEDULE.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -113,4 +129,4 @@ const Airplane = () => {
     )
 }
 
-export default Airplane
+export default Schedule

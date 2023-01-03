@@ -1,70 +1,48 @@
 import { Alert, Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Grid, MenuItem, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import LoadingButton from '@mui/lab/LoadingButton';
+import axios from 'axios';
+import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/airplaneActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddFlightAction, GetFlightAction } from '../../../redux/actions/flightAction';
-// import { useNavigate } from 'react-router-dom';
+import  LoadingButton  from '@mui/lab/LoadingButton';
 
-const NewFlights = () => {
-  const { successMessage, errorMessage } = useSelector((state) => state.AuthReducers)
+const NewCrew = () => {
   const [open, setOpen] = React.useState(false);
+  const { successMessage } = useSelector((state) => state.AirplaneReducers)
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [sMessage, setSMessage] = useState(false);
-  const [eMessage, setEMessage] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-
-      flightdate: '',
-      origin: '',
-      destination: ''
+      manufacturer: '',
+      model: '',
+      aircraft_type: ''
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
+      const response = await dispatch(AddAirplaneAction(values));
+      dispatch(GetAirplaneAction());
 
-      const data = await dispatch(AddFlightAction(values));
-      console.log(data.message);
-      if (data.message === true) {
-        setSubmitting(true);
-        setSMessage(true);
-        dispatch(GetFlightAction());
-        setTimeout(() => {
-          setEMessage(false)
-        }, 3000);
-        resetForm()
-        handleClose();
-      }
-      else {
-        setEMessage(true)
-        setTimeout(() => {
-          setEMessage(false)
-        }, 3000);
-        handleClose();
-      }
-      setSubmitting(false)
-
-      // resetForm();
+      resetForm();
+      handleClose();
 
     },
 
     validationSchema: Yup.object().shape({
-      flightdate: Yup.string().required('Flight date is required'),
-      origin: Yup.string().required('origin is required'),
-      destination: Yup.string().required('Destination Type is required'),
+      model: Yup.string().required('Model is required'),
+      manufacturer: Yup.string().required('Manufacturer is required'),
+      aircraft_type: Yup.string().required('Aircraft Type is required'),
     }),
   });
 
-  const { handleSubmit, errors, touched, getFieldProps, isSubmitting } = formik
-
+  const { handleSubmit, errors, touched, getFieldProps, resetForm, isSubmitting } = formik
   return (
     <>
       <Button variant="contained" color="success" onClick={handleOpen}>
-        <AddIcon /> New Flight
+        <AddIcon /> New Crew
       </Button>
       <Modals
         open={open}
@@ -73,16 +51,10 @@ const NewFlights = () => {
         aria-describedby="modal-modal-description"
       >
         {/* <Container component="main" maxWidth="xs"> */}
-        <Box sx={{ margin: 'auto', padding: '5px', position: 'relative' }}>
-          {sMessage ?
-            <Alert severity="success" sx={{ position: 'absolute', top: '10' }}>{successMessage}</Alert>
-            :
-            eMessage ?
-              <Alert severity="error" sx={{ position: 'absolute', top: '10' }}>{errorMessage}</Alert>
-              :
-              null
-          }
-        </Box>
+        {/* <Box sx={{ margin: 'auto', padding: '5px' }}>
+            <Alert severity="success">{successMessage}</Alert>
+            <Alert severity="error">Invalid Crediential</Alert>
+          </Box> */}
 
         <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
           <CardContent>
@@ -98,7 +70,7 @@ const NewFlights = () => {
                 {/* <LockOutlinedIcon /> */}
               </Avatar>
               <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                Add New Flight
+                Add New Crew
               </Typography>
 
               <form onSubmit={handleSubmit}>
@@ -114,14 +86,13 @@ const NewFlights = () => {
 
                     <TextField
 
-                      id='flightdate'
-                      label='Flight Date'
+                      id='manufacturer'
+                      label='Manufacturer'
                       size='small'
-                      type='date'
                       fullWidth
-                      {...getFieldProps('flightdate')}
-                      error={Boolean(errors.flightdate && touched.flightdate)}
-                      helperText={touched.flightdate && errors.flightdate}
+                      {...getFieldProps('manufacturer')}
+                      error={Boolean(errors.manufacturer && touched.manufacturer)}
+                      helperText={touched.manufacturer && errors.manufacturer}
 
                     />
                   </Grid>
@@ -136,13 +107,13 @@ const NewFlights = () => {
 
                     <TextField
 
-                      id='origin'
-                      label='Flight Origin'
+                      id='model'
+                      label='Model'
                       size='small'
                       fullWidth
-                      {...getFieldProps('origin')}
-                      error={Boolean(errors.origin && touched.origin)}
-                      helperText={touched.origin && errors.origin}
+                      {...getFieldProps('model')}
+                      error={Boolean(errors.model && touched.model)}
+                      helperText={touched.model && errors.model}
 
                     />
 
@@ -158,13 +129,13 @@ const NewFlights = () => {
 
                     <TextField
 
-                      id='destination'
-                      label='Flight Destination'
+                      id='aircraf_type'
+                      label='Aircraft Type'
                       size='small'
                       fullWidth
-                      {...getFieldProps('destination')}
-                      error={Boolean(errors.destination && touched.destination)}
-                      helperText={touched.destination && errors.destination}
+                      {...getFieldProps('aircraft_type')}
+                      error={Boolean(errors.aircraft_type && touched.aircraft_type)}
+                      helperText={touched.aircraft_type && errors.aircraft_type}
 
                     />
 
@@ -186,9 +157,8 @@ const NewFlights = () => {
                       variant="contained"
                       loading={isSubmitting}
                     >
-                      Sign up
+                      Add
                     </LoadingButton>
-
                   </Grid>
 
                 </Grid>
@@ -206,4 +176,4 @@ const NewFlights = () => {
   )
 }
 
-export default NewFlights
+export default NewCrew

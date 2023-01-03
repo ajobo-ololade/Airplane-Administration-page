@@ -8,24 +8,24 @@ import Modals from '../../../components/Modal';
 import { DeleteModal, EditModal } from './ModalComp';
 
 
-const Airplane = () => {
+const Crew = () => {
 
-    const { AIRPLANE, isLoading } = useSelector((state) => state.AirplaneReducers);
+    const { CREW } = useSelector((state) => state.CrewReducers);
 
-    // console.log(AIRPLANE);
+    // console.log(CREW);
 
     const headerData = [
         {
-            label: `numser`,
+            label: `Crew ID`,
         },
         {
-            label: `manufacturer`,
+            label: `Emp num`,
         },
         {
-            label: `model`,
+            label: `Schedule ID`,
         },
         {
-            label: `aircraft Type`,
+            label: `Role`,
         },
         {
             label: 'Edit',
@@ -68,7 +68,7 @@ const Airplane = () => {
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
             <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
-            <TableContainer>
+            <TableContainer sx={{ height: 400, overflowY: 'auto' }}>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 
                 <Table sx={{ minWidth: 650,}} aria-label="simple table" >
@@ -82,28 +82,24 @@ const Airplane = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {AIRPLANE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((airplane, id) => (
+                        {CREW?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((crew, id) => (
                             <TableRow key={id}>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.numser}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.manufacturer}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.model}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.aircraft_type}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(airplane)} /></TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(airplane)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{crew.crewid}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{crew.empnum}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{crew.scheduleid}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{crew.role}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(crew)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(crew)} /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
 
                 </Table>
-                 {/* :
-                <Box sx={{ width: '100%' }}>
-                    <LinearProgress />
-                </Box>} */}
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={AIRPLANE.length}
+                count={CREW.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -113,4 +109,4 @@ const Airplane = () => {
     )
 }
 
-export default Airplane
+export default Crew

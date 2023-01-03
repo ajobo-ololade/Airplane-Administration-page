@@ -1,12 +1,11 @@
-import { Avatar, Button, Card, CardContent, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { DeleteScheduleAction, EditScheduleAction, GetScheduleAction } from "../../../redux/actions/scheduleAction";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from "react";
-import { DeleteFlightAction, EditFlightAction, GetFlightAction } from "../../../redux/actions/flightAction";
-import axios from "axios";
-import { LoadingButton } from "@mui/lab";
+import { useEffect } from "react";
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const style = {
     position: 'absolute',
@@ -22,15 +21,14 @@ const style = {
 };
 
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
-    const [sMessage, setSMessage] = useState(false);
-    const [eMessage, setEMessage] = useState(false);
+
     useEffect(() => {
         if (editObj) {
-            const { flightdate, origin, destination, } = editObj;
+            const { manufacturer, model, aircraft_type, } = editObj;
             //   const priviledgeArray = JSON.parse(priviledges);
-            setFieldValue('flightdate', flightdate);
-            setFieldValue(' origin', origin);
-            setFieldValue('destination', destination);
+            setFieldValue('manufacturer', manufacturer);
+            setFieldValue(' model', model);
+            setFieldValue('aircraft_type', aircraft_type);
         }
     }, [editObj]);
 
@@ -38,47 +36,31 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     const formik = useFormik({
         initialValues: {
 
-            flightdate: '',
-            origin: '',
-            destination: ''
+            manufacturer: '',
+            model: '',
+            aircraft_type: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            // values.flightnum = editObj.flightnum
+            console.log(editObj.numser);
+            // values.numser = editObj.numser
             console.log(values);
-            const data = await dispatch(EditFlightAction(editObj.flightnum, values));
-            if (data.message === true) {
-                setSubmitting(true);
-                setSMessage(true);
-                dispatch(GetFlightAction());
-                setTimeout(() => {
-                    setEMessage(false)
-                }, 3000);
-                resetForm()
-                handleEditClose();
-            }
-            else {
-                setEMessage(true)
-                setTimeout(() => {
-                    setEMessage(false)
-                }, 3000);
-                handleEditClose();
-            }
+            const response = await dispatch(EditScheduleAction(editObj.numser, values));
+            dispatch(GetScheduleAction());
 
-            // resetForm();
-            // handleEditClose();
+            resetForm();
+            handleEditClose();
 
         },
 
         validationSchema: Yup.object().shape({
-            flightdate: Yup.string().required('Flight date is required'),
-            origin: Yup.string().required('Origin is required'),
-            destination: Yup.string().required('Destination Type is required'),
+            model: Yup.string().required('Model is required'),
+            manufacturer: Yup.string().required('Manufacturer is required'),
+            aircraft_type: Yup.string().required('Aircraft Type is required'),
         }),
     });
 
     const { handleSubmit, errors, touched, setFieldValue, resetForm, values, isSubmitting, handleBlur, handleChange } = formik
-
     return (
         <Modal
             open={editOpen}
@@ -86,6 +68,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             sx={{ xs: {} }}
         >
             <Box sx={style}>
+            {/* <Grid sx={{height: '100%', alignItem: 'center', justifyContent: 'center'}}>
+                <Grid xs={12} sm={6} lg={4} sx={{border:' 2px solid #000', boxShadow: 24}}>
+                    <Grid container>
+                        <Grid item>
+                        
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid> */}
                 <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
                     <CardContent>
                         <Box
@@ -100,7 +91,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                 {/* <LockOutlinedIcon /> */}
                             </Avatar>
                             <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                                Edit Flight
+                                Edit Schedule
                             </Typography>
 
                             <form onSubmit={handleSubmit}>
@@ -117,16 +108,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='flightdate'
-                                            label='Flight Date'
+                                            id='manufacturer'
+                                            label='Manufacturer'
                                             size='small'
                                             fullWidth
-                                            type='date'
-                                            value={values.flightdate}
+                                            value={values.manufacturer}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.flightdate && touched.flightdate)}
-                                            helperText={touched.flightdate && errors.flightdate}
+                                            error={Boolean(errors.manufacturer && touched.manufacturer)}
+                                            helperText={touched.manufacturer && errors.manufacturer}
 
                                         />
                                     </Grid>
@@ -141,15 +131,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='origin'
-                                            label='Flight Origin'
+                                            id='model'
+                                            label='Model'
                                             size='small'
                                             fullWidth
-                                            value={values.origin}
+                                            value={values.model}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.origin && touched.origin)}
-                                            helperText={touched.origin && errors.origin}
+                                            error={Boolean(errors.model && touched.model)}
+                                            helperText={touched.model && errors.model}
 
                                         />
 
@@ -165,15 +155,16 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='destination'
-                                            label='Flight Destination'
+
+                                            id='aircraf_type'
+                                            label='Aircraft Type'
                                             size='small'
                                             fullWidth
-                                            value={values.destination}
+                                            value={values.aircraft_type}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.destination && touched.destination)}
-                                            helperText={touched.destination && errors.destination}
+                                            error={Boolean(errors.aircraft_type && touched.aircraft_type)}
+                                            helperText={touched.aircraft_type && errors.aircraft_type}
 
                                         />
 
@@ -213,30 +204,22 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     )
 }
 
-export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelClose }) => {
+export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
+    useEffect(() => {
+        // if (editObj) {
+        //   const { manufacturer,  model, aircraft_type, } = editObj;
+        // //   const priviledgeArray = JSON.parse(priviledges);
+        //   setFieldValue('manufacturer', manufacturer);
+        //   setFieldValue(' model',  model);
+        //   setFieldValue('aircraft_type', aircraft_type);
+        // }
+    }, [delObj]);
+
     const dispatch = useDispatch();
-    const [sMessage, setSMessage] = useState(false);
-    const [eMessage, setEMessage] = useState(false);
+    console.log(delObj.numser);
     const handleDelete = async () => {
-        const flightnum = delObj.flightnum
-        const data = await dispatch(DeleteFlightAction(flightnum));
-        console.log(data.data);
-        if (data.data.message.success === true) {
-            dispatch(GetFlightAction());
-            setSMessage(true);
-            setTimeout(() => {
-                setEMessage(false)
-                handleDelClose();
-            }, 2000);
-        }
-        else {
-            setEMessage(true)
-            setTimeout(() => {
-                setEMessage(false)
-            }, 3000);
-            // handleDelClose();
-            setEMessage(false)
-        }
+        const response = await dispatch(DeleteScheduleAction(delObj.numser))
+        dispatch(GetScheduleAction());
     }
     return (
         <Modal
@@ -251,16 +234,15 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelClose
                     </Typography>
                     <Grid container sx={{ marginTop: '15px', justifyContent: 'center' }}>
                         <Grid xs={6} p={1}>
-                            <LoadingButton
-                                type="submit"
-                                fullWidth
+                            <Button
+                                variant={'contained'}
                                 color="success"
-                                variant="contained"
-                                loading={sMessage}
+                                fullWidth
                                 onClick={handleDelete}
+                            // onClose={onClose}
                             >
                                 Yes
-                            </LoadingButton>
+                            </Button>
                         </Grid>
 
                         <Grid xs={6} p={1}>

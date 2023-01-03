@@ -1,57 +1,83 @@
 import React from 'react'
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from "@mui/material";
-import { Home, Article, Settings, Group, Storefront, Person, AccountBox, ModeNight } from '@mui/icons-material';
 import Drawer from '@mui/material/Drawer';
-import PropTypes from 'prop-types';
-import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import { Home,Settings, ModeNight } from '@mui/icons-material';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import GroupsIcon from '@mui/icons-material/Groups';
 import PersonIcon from '@mui/icons-material/Person';
 import AccessibleIcon from '@mui/icons-material/Accessible';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import FlightIcon from '@mui/icons-material/Flight';
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
+import StarsIcon from '@mui/icons-material/Stars';
 
 export const DashboardSideBar = ({ }) => {
   const sideContent = [
     {
+      title: 'Airline System',
+      path: '/dashboard/dashboard',
+      // icon: <Home />
+    },
+    {
       title: 'Dashboard',
       path: '/dashboard/dashboard',
-      icon: <Home sx={{ color: "white" }} />
+      icon: <Home />
     },
     {
       title: 'Staff',
       path: '/dashboard/staffs',
-      icon: <PersonIcon sx={{ color: "white" }} />
+      icon: <PersonIcon />
     },
     {
       title: 'Airplanes',
       path: '/dashboard/airplanes',
-      icon: <FlightTakeoffIcon sx={{ color: "white" }} />
+      icon: <FlightTakeoffIcon />
     },
     {
       title: 'Flight',
       path: '/dashboard/flights',
-      icon: <ConnectingAirportsIcon sx={{ color: "white" }} />
+      icon: <FlightIcon />
     },
     {
       title: 'Passangers',
       path: '/dashboard/passangers',
-      icon: <GroupsIcon sx={{ color: "white" }} />
+      icon: <GroupsIcon />
+    },
+    {
+      title: "Schedule",
+      num: '/dashboard/schedules',
+      icon: <ListAltIcon />
+    },
+    {
+      title: "Rating",
+      num: '/dashboard/ratings',
+      icon: <StarsIcon />
+    },
+    {
+      title: "Airplane Types",
+      num: '/dashboard/airplanetypes',
+      icon: <ConnectingAirportsIcon />
+    },
+    {
+      title: "Crew",
+      num: '/dashboard/crews',
+      icon: <AccessibleIcon />
     },
     {
       title: 'Log Out',
       path: '',
-      icon: <Settings sx={{ color: "white" }} />
-    }
+      icon: <Settings />
+    },
   ]
 
   return (
     <>
-      <Box position="fixe" sx={{ marginTop: '60px', height: 600, overflowY: 'auto', }} >
+      <Box position="fixe" sx={{ marginTop: '', height: 700, overflowY: 'auto', }} >
         {sideContent.map(({ title, path, icon }) => (
           <List>
             <ListItem disablePadding>
               <ListItemButton component="a" href={path}>
-                <ListItemIcon>
+                <ListItemIcon  sx={{color: 'white'}}>
                   {icon}
                 </ListItemIcon>
                 <ListItemText primary={title} />

@@ -41,7 +41,7 @@ export const AddFlightAction = (obj) => async (dispatch) => {
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: data.message,
+                payload: "Flight created successfully",
             })
 
             dispatch(GetFlightAction())
@@ -49,10 +49,10 @@ export const AddFlightAction = (obj) => async (dispatch) => {
         else{
             dispatch({
                  type: messageActionType.ERROR_MESSAGE,
-                payload: data.message,
+                payload: "Invalid Credentials",
             })
         }
-        
+
         return data
 
     }catch(error) {

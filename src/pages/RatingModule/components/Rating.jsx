@@ -8,21 +8,18 @@ import Modals from '../../../components/Modal';
 import { DeleteModal, EditModal } from './ModalComp';
 
 
-const Airplane = () => {
+const Rating = () => {
 
-    const { AIRPLANE, isLoading } = useSelector((state) => state.AirplaneReducers);
+    const { RATING } = useSelector((state) => state.RatingReducers);
 
-    // console.log(AIRPLANE);
+    console.log(RATING);
 
     const headerData = [
         {
-            label: `numser`,
+            label: `rating Num`,
         },
         {
-            label: `manufacturer`,
-        },
-        {
-            label: `model`,
+            label: `name`,
         },
         {
             label: `aircraft Type`,
@@ -68,7 +65,7 @@ const Airplane = () => {
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
             <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
-            <TableContainer>
+            <TableContainer sx={{ height: 400, overflowY: 'auto' }}>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 
                 <Table sx={{ minWidth: 650,}} aria-label="simple table" >
@@ -82,14 +79,13 @@ const Airplane = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {AIRPLANE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((airplane, id) => (
+                        {RATING.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((rating, id) => (
                             <TableRow key={id}>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.numser}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.manufacturer}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.model}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.aircraft_type}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(airplane)} /></TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(airplane)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{rating.ratno}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{rating.name}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{rating.aircraft_type}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(rating)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(rating)} /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -103,7 +99,7 @@ const Airplane = () => {
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={AIRPLANE.length}
+                count={RATING.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -113,4 +109,4 @@ const Airplane = () => {
     )
 }
 
-export default Airplane
+export default Rating

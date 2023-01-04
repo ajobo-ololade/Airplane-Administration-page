@@ -196,8 +196,8 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     const dispatch = useDispatch();
     const id = delObj.flightnum
     const handleDelete = async () => {
-        const data = await dispatch(DeleteFlightAction(id))
-        console.log(id);
+        const data = await dispatch(DeleteFlightAction(delObj.flightnum))
+        console.log(data);
     }
     return (
         <Modal

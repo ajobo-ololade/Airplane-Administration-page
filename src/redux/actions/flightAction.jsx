@@ -57,7 +57,7 @@ export const EditFlightAction = (value) => async (dispatch) => {
     try{
         const response = await editFlightRequest(value);
         console.log(response.message);
-        if(response?.message === true){
+        if(response?.message.success === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
@@ -77,15 +77,15 @@ export const DeleteFlightAction = (value) => async (dispatch) => {
     try{
         const response = await deleteFlightRequest(value);
         console.log(response);
-        // if(response?.message === true){
+        if(response?.message.success === true){
 
-        //     dispatch({
-        //         type: messageActionType.SUCCESS_MESSAGE,
-        //         payload: response.message,
-        //     })
+            dispatch({
+                type: messageActionType.SUCCESS_MESSAGE,
+                payload: response.message,
+            })
 
-        //     dispatch(GetFlightAction())
-        // }
+            dispatch(GetFlightAction())
+        }
 
     }catch(error) {
   console.log(error);

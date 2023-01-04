@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddFlightAction } from '../../../redux/actions/flightAction';
+import { AddPassengerAction } from '../../../redux/actions/passengerAction';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 const NewPassenger = () => {
@@ -26,7 +26,7 @@ const NewPassenger = () => {
 
     onSubmit: async (values, { resetForm }) => {
 
-      const response = await dispatch(AddFlightAction(values));
+      const response = await dispatch(AddPassengerAction(values));
       console.log(response);
 
       resetForm();

@@ -33,6 +33,8 @@ export const GetPassengerAction = () => async (dispatch) => {
 
 export const AddPassengerAction = (obj) => async (dispatch) => {
     try{
+        console.log('je')
+        console.log(obj)
         const response = await addPasssengerRequest(obj);
         // console.log(response.message);
         if(response?.message === true){

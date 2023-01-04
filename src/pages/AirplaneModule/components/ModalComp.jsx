@@ -35,14 +35,14 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
-
+            id:'',
             manufacturer: '',
             model: '',
             aircraft_type: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.empnum
+            values.id = editObj.numser
             console.log(values);
             const response = await dispatch(EditAirplaneAction(values));
             console.log(response);
@@ -219,6 +219,7 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     const handleDelete = async () => {
         const response = await dispatch(DeleteAirplaneAction(delObj.numser))
         console.log(response);
+       
     }
     return (
         <Modal

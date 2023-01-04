@@ -56,8 +56,8 @@ export const EditAirplaneAction = (value) => async (dispatch) => {
 
     try{
         const response = await editAirplaneRequest(value);
-        console.log(response.message);
-        if(response?.message === true){
+        console.log(response);
+        if(response?.message.success === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
@@ -75,8 +75,9 @@ export const EditAirplaneAction = (value) => async (dispatch) => {
 export const DeleteAirplaneAction = (value) => async (dispatch) => {
     
     try{
+        console.log(value);
         const response = await deleteAirplaneRequest(value);
-        console.log(response.message);
+        console.log(response);
         if(response?.message === true){
 
             dispatch({

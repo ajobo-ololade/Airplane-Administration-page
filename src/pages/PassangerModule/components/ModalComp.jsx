@@ -44,7 +44,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.passID
+            values.id = editObj.pasID
             console.log(values);
             const response = await dispatch(EditPassengerAction(values));
             console.log(response);
@@ -247,7 +247,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     const handleDelete = () => {
-        console.log(delObj.flightnum);
+        console.log(delObj.pasID);
     }
     return (
         <Modal

@@ -1,6 +1,6 @@
 import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { DeleteAirplaneAction, EditAirplaneAction, GetAirplaneAction } from "../../../redux/actions/airplaneActions";
+import { DeleteScheduleAction, EditScheduleAction, GetScheduleAction } from "../../../redux/actions/scheduleAction";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -35,19 +35,18 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
-            id:'',
+
             manufacturer: '',
             model: '',
             aircraft_type: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.numser
             console.log(editObj.numser);
             // values.numser = editObj.numser
             console.log(values);
-            const response = await dispatch(EditAirplaneAction(editObj.numser, values));
-            dispatch(GetAirplaneAction());
+            const response = await dispatch(EditScheduleAction(editObj.numser, values));
+            dispatch(GetScheduleAction());
 
             resetForm();
             handleEditClose();
@@ -92,7 +91,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                 {/* <LockOutlinedIcon /> */}
                             </Avatar>
                             <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                                Edit Airplane
+                                Edit Schedule
                             </Typography>
 
                             <form onSubmit={handleSubmit}>
@@ -219,8 +218,8 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     const dispatch = useDispatch();
     console.log(delObj.numser);
     const handleDelete = async () => {
-        const response = await dispatch(DeleteAirplaneAction(delObj.numser))
-        dispatch(GetAirplaneAction());
+        const response = await dispatch(DeleteScheduleAction(delObj.numser))
+        dispatch(GetScheduleAction());
     }
     return (
         <Modal

@@ -52,12 +52,12 @@ export const AddAirplaneAction = (obj) => async (dispatch) => {
  }
 }
 
-export const EditAirplaneAction = (value) => async (dispatch) => {
+export const EditAirplaneAction = (id, value) => async (dispatch) => {
 
     try{
-        const response = await editAirplaneRequest(value);
-        console.log(response);
-        if(response?.message.success === true){
+        const response = await editAirplaneRequest(id, value);
+        console.log(response.message);
+        if(response?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,

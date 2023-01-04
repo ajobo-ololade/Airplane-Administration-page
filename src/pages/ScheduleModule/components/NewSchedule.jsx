@@ -1,17 +1,16 @@
-import { Alert, Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { Alert, Avatar, Box, Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/airplaneActions';
+import { AddScheduleAction, GetScheduleAction } from '../../../redux/actions/scheduleAction';
 import { useDispatch, useSelector } from 'react-redux';
 import  LoadingButton  from '@mui/lab/LoadingButton';
 
-const NewAirplane = () => {
+const NewSchedule = () => {
   const [open, setOpen] = React.useState(false);
-  const { successMessage } = useSelector((state) => state.AirplaneReducers)
+  const { successMessage } = useSelector((state) => state.ScheduleReducers)
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
@@ -23,8 +22,8 @@ const NewAirplane = () => {
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
-      const response = await dispatch(AddAirplaneAction(values));
-      dispatch(GetAirplaneAction());
+      const response = await dispatch(AddScheduleAction(values));
+      dispatch(GetScheduleAction());
 
       resetForm();
       handleClose();
@@ -42,7 +41,7 @@ const NewAirplane = () => {
   return (
     <>
       <Button variant="contained" color="success" onClick={handleOpen}>
-        <AddIcon /> New Airplane
+        <AddIcon /> New Schedule
       </Button>
       <Modals
         open={open}
@@ -70,7 +69,7 @@ const NewAirplane = () => {
                 {/* <LockOutlinedIcon /> */}
               </Avatar>
               <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                Add New Airplane
+                Add New Schedule
               </Typography>
 
               <form onSubmit={handleSubmit}>
@@ -176,4 +175,4 @@ const NewAirplane = () => {
   )
 }
 
-export default NewAirplane
+export default NewSchedule

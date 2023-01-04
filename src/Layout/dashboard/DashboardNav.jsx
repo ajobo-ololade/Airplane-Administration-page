@@ -45,7 +45,7 @@ export const DashboardNavBar = ({ setOpen }) => {
             label={auth ? 'Logout' : 'Login'}
           />
         </FormGroup> */}
-        <AppBar position="sticky">
+        <AppBar position="sticky" >
           <Toolbar>
             <IconButton
               size="large"

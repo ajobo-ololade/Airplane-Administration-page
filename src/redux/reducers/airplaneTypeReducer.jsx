@@ -1,13 +1,13 @@
-import { flightActionTypes, isLoadingType, messageActionType } from "../types"
+import { airplaneTypeActionTypes, messageActionType } from "../types"
 
 const initialState = {
     successMessage: '',
     errorMessage: '',
-    FLIGHT: [],
+    AIRPLANETYPE: [],
 
 }
 
-export const FlightReducers = (state = initialState, { type, payload }) => {
+export const AirplaneTypeReducers = (state = initialState, { type, payload }) => {
     // console.log(payload);
     switch (type) {
 
@@ -17,11 +17,10 @@ export const FlightReducers = (state = initialState, { type, payload }) => {
                 succcessMessage: payload,
             }
 
-        case flightActionTypes.GET_FLIGHT:
+        case airplaneTypeActionTypes.GET_AIRPLANETYPE:
             return {
                 ...state,
-                FLIGHT: payload,
-                isloading: false
+                AIRPLANETYPE: payload,
             }
 
             case messageActionType.ERROR_MESSAGE:

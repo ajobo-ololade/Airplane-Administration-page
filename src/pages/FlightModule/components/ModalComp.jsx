@@ -3,9 +3,10 @@ import { Box } from "@mui/system";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useEffect } from "react";
-import { DeleteFlightAction, EditFlightAction } from "../../../redux/actions/flightAction";
+import { useEffect, useState } from "react";
+import { DeleteFlightAction, EditFlightAction, GetFlightAction } from "../../../redux/actions/flightAction";
 import axios from "axios";
+import { LoadingButton } from "@mui/lab";
 
 const style = {
     position: 'absolute',
@@ -21,15 +22,17 @@ const style = {
 };
 
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
+    const [sMessage, setSMessage] = useState(false);
+    const [eMessage, setEMessage] = useState(false);
     useEffect(() => {
         if (editObj) {
-          const { flightdate,  origin, destination, } = editObj;
-        //   const priviledgeArray = JSON.parse(priviledges);
-          setFieldValue('flightdate', flightdate);
-          setFieldValue(' origin',  origin);
-          setFieldValue('destination', destination);
+            const { flightdate, origin, destination, } = editObj;
+            //   const priviledgeArray = JSON.parse(priviledges);
+            setFieldValue('flightdate', flightdate);
+            setFieldValue(' origin', origin);
+            setFieldValue('destination', destination);
         }
-      }, [editObj]);
+    }, [editObj]);
 
     const dispatch = useDispatch();
     const formik = useFormik({
@@ -41,13 +44,29 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.flightnum
+            // values.flightnum = editObj.flightnum
             console.log(values);
-            const response = await dispatch(EditFlightAction(values));
-            console.log(response);
+            const data = await dispatch(EditFlightAction(editObj.flightnum, values));
+            if (data.message === true) {
+                setSubmitting(true);
+                setSMessage(true);
+                dispatch(GetFlightAction());
+                setTimeout(() => {
+                    setEMessage(false)
+                }, 3000);
+                resetForm()
+                handleEditClose();
+            }
+            else {
+                setEMessage(true)
+                setTimeout(() => {
+                    setEMessage(false)
+                }, 3000);
+                handleEditClose();
+            }
 
-            resetForm();
-            handleEditClose();
+            // resetForm();
+            // handleEditClose();
 
         },
 
@@ -85,7 +104,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                             </Typography>
 
                             <form onSubmit={handleSubmit}>
-                                
+
                                 <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
                                     <Grid item xs={12}
@@ -168,13 +187,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                         }}
                                     >
 
-                                        <Button
-                                            variant={'contained'}
+                                        <LoadingButton
+                                            type="submit"
                                             fullWidth
-                                            type='submit'
+                                            color="primary"
+                                            variant="contained"
+                                            loading={isSubmitting}
                                         >
                                             Update
-                                        </Button>
+                                        </LoadingButton>
 
                                     </Grid>
 
@@ -192,12 +213,30 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     )
 }
 
-export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
+export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelClose }) => {
     const dispatch = useDispatch();
-    const id = delObj.flightnum
+    const [sMessage, setSMessage] = useState(false);
+    const [eMessage, setEMessage] = useState(false);
     const handleDelete = async () => {
-        const data = await dispatch(DeleteFlightAction(delObj.flightnum))
-        console.log(data);
+        const flightnum = delObj.flightnum
+        const data = await dispatch(DeleteFlightAction(flightnum));
+        console.log(data.data);
+        if (data.data.message.success === true) {
+            dispatch(GetFlightAction());
+            setSMessage(true);
+            setTimeout(() => {
+                setEMessage(false)
+                handleDelClose();
+            }, 2000);
+        }
+        else {
+            setEMessage(true)
+            setTimeout(() => {
+                setEMessage(false)
+            }, 3000);
+            // handleDelClose();
+            setEMessage(false)
+        }
     }
     return (
         <Modal
@@ -212,14 +251,16 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
                     </Typography>
                     <Grid container sx={{ marginTop: '15px', justifyContent: 'center' }}>
                         <Grid xs={6} p={1}>
-                            <Button
-                                variant={'contained'}
-                                color="success"
+                            <LoadingButton
+                                type="submit"
                                 fullWidth
+                                color="success"
+                                variant="contained"
+                                loading={sMessage}
                                 onClick={handleDelete}
                             >
                                 Yes
-                            </Button>
+                            </LoadingButton>
                         </Grid>
 
                         <Grid xs={6} p={1}>

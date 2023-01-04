@@ -35,14 +35,13 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
-            id:'',
+
             manufacturer: '',
             model: '',
             aircraft_type: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.numser
             console.log(editObj.numser);
             // values.numser = editObj.numser
             console.log(values);

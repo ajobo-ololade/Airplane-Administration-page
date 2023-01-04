@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { Alert, Avatar, Box, Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
@@ -9,7 +9,7 @@ import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/air
 import { useDispatch, useSelector } from 'react-redux';
 import  LoadingButton  from '@mui/lab/LoadingButton';
 
-const NewAirplane = () => {
+const NewRating = () => {
   const [open, setOpen] = React.useState(false);
   const { successMessage } = useSelector((state) => state.AirplaneReducers)
   const handleOpen = () => setOpen(true);
@@ -42,7 +42,7 @@ const NewAirplane = () => {
   return (
     <>
       <Button variant="contained" color="success" onClick={handleOpen}>
-        <AddIcon /> New Airplane
+        <AddIcon /> New Rating
       </Button>
       <Modals
         open={open}
@@ -70,7 +70,7 @@ const NewAirplane = () => {
                 {/* <LockOutlinedIcon /> */}
               </Avatar>
               <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                Add New Airplane
+                Add New Rating
               </Typography>
 
               <form onSubmit={handleSubmit}>
@@ -176,4 +176,4 @@ const NewAirplane = () => {
   )
 }
 
-export default NewAirplane
+export default NewRating

@@ -1,31 +1,23 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Box } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, } from '@mui/material';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import LinearProgress from '@mui/material/LinearProgress';
-import Modals from '../../../components/Modal';
 import { DeleteModal, EditModal } from './ModalComp';
 
 
-const Airplane = () => {
+const AirplaneType = () => {
 
-    const { AIRPLANE, isLoading } = useSelector((state) => state.AirplaneReducers);
+    const { AIRPLANETYPE } = useSelector((state) => state.AirplaneTypeReducers);
 
-    // console.log(AIRPLANE);
+    console.log(AIRPLANETYPE);
 
     const headerData = [
         {
-            label: `numser`,
+            label: `Type Id`,
         },
         {
-            label: `manufacturer`,
-        },
-        {
-            label: `model`,
-        },
-        {
-            label: `aircraft Type`,
+            label: `Name`,
         },
         {
             label: 'Edit',
@@ -68,7 +60,7 @@ const Airplane = () => {
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
             <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
-            <TableContainer>
+            <TableContainer sx={{ height: 400, overflowY: 'auto' }}>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 
                 <Table sx={{ minWidth: 650,}} aria-label="simple table" >
@@ -82,14 +74,12 @@ const Airplane = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {AIRPLANE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((airplane, id) => (
+                        {AIRPLANETYPE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((airplaneType, id) => (
                             <TableRow key={id}>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.numser}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.manufacturer}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.model}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{airplane.aircraft_type}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(airplane)} /></TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(airplane)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{airplaneType.typeid}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{airplaneType.name}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(airplaneType)} /></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(airplaneType)} /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -103,7 +93,7 @@ const Airplane = () => {
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={AIRPLANE.length}
+                count={AIRPLANETYPE.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -113,4 +103,4 @@ const Airplane = () => {
     )
 }
 
-export default Airplane
+export default AirplaneType

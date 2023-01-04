@@ -2,25 +2,28 @@ import React, { useState } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Avatar, Button, TextField, Grid, Link, Typography, IconButton, InputAdornment, MenuItem, CircularProgress } from '@mui/material';
-// import { Icon } from '@iconify/react';
 import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { GetPassengerAction } from '../../redux/actions/passengerAction'
 import { signUpAction } from '../../redux/actions/authAction';
-import  LoadingButton  from '@mui/lab/LoadingButton';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
     const dispatch = useDispatch();
+    const { successMessage, errorMessage } = useSelector((state) => state.AuthReducers)
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
+    const [sMessage, setSMessage] = useState(false);
+    const [eMessage, setEMessage] = useState(false);
     const formik = useFormik({
         initialValues: {
+
             first_name: ``,
             last_name: ``,
             user_name: ``,
@@ -28,11 +31,24 @@ const SignUp = () => {
             password: '',
         },
 
-        onSubmit: async (values, { resetForm }) => {
+        onSubmit: async (values, { resetForm, setSubmitting }) => {
             console.log(values);
-            // const data = await dispatch(signUpAction(values))
-            const data = await axios.post(`http://127.0.0.1:8000/api/register`, values)
-            console.log(data);
+            const data = await dispatch(signUpAction(values))
+            if (data.success === true) {
+                setSubmitting(true);
+                setSMessage(true);
+                setTimeout(() => {
+                    navigate("/signIn")
+                }, 3000);
+                resetForm()
+            }
+            else {
+                setEMessage(true)
+                setTimeout(() => {
+                    setEMessage(false)
+                }, 3000);
+            }
+            setSubmitting(false)
         },
 
         validationSchema: Yup.object().shape({
@@ -50,10 +66,17 @@ const SignUp = () => {
     };
     return (
         <Container component="main" maxWidth="xs">
-            {/* <Box sx={{ margin: 'auto', padding: '5px' }}>
-                <Alert severity="success">Registration Succeful</Alert>
-                <Alert severity="error">Invalid Crediential</Alert>
-            </Box> */}
+
+            <Box sx={{ margin: 'auto', padding: '5px', position: 'relative' }}>
+               {sMessage ? 
+                <Alert severity="success" sx={{position: 'absolute', top: '10'}}>{successMessage}</Alert>
+                :
+                eMessage ?
+                <Alert severity="error" sx={{position: 'absolute', top: '10'}}>{errorMessage}</Alert>
+                :
+                null
+               }
+            </Box>
 
             <Card sx={{ margin: 'auto', marginTop: '50px', padding: '2rem' }} >
                 <CardContent>
@@ -223,7 +246,7 @@ const SignUp = () => {
 
                 </CardContent>
             </Card>
-        </Container>
+        </Container >
     )
 }
 

@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import LoadingButton from '@mui/lab/LoadingButton';
+import { DeleteCrewAction, GetCrewAction } from "../../../redux/actions/crewAction";
 
 const style = {
     position: 'absolute',
@@ -35,14 +36,13 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
-            id:'',
+
             manufacturer: '',
             model: '',
             aircraft_type: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.numser
             console.log(editObj.numser);
             // values.numser = editObj.numser
             console.log(values);
@@ -207,20 +207,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     useEffect(() => {
-        // if (editObj) {
-        //   const { manufacturer,  model, aircraft_type, } = editObj;
-        // //   const priviledgeArray = JSON.parse(priviledges);
-        //   setFieldValue('manufacturer', manufacturer);
-        //   setFieldValue(' model',  model);
-        //   setFieldValue('aircraft_type', aircraft_type);
-        // }
+     
     }, [delObj]);
 
     const dispatch = useDispatch();
-    console.log(delObj.numser);
+    console.log(delObj.crewid);
     const handleDelete = async () => {
-        const response = await dispatch(DeleteAirplaneAction(delObj.numser))
-        dispatch(GetAirplaneAction());
+        const response = await dispatch(DeleteCrewAction(delObj.crewid))
+        console.log(response);
+        dispatch(GetCrewAction());
     }
     return (
         <Modal

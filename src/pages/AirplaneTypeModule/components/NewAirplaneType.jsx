@@ -5,11 +5,11 @@ import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/airplaneActions';
+import { AddAirplaneTypeAction, GetAirplaneTypeAction } from '../../../redux/actions/airplaneTypeAction';
 import { useDispatch, useSelector } from 'react-redux';
 import  LoadingButton  from '@mui/lab/LoadingButton';
 
-const NewAirplane = () => {
+const NewAirplaneType = () => {
   const [open, setOpen] = React.useState(false);
   const { successMessage } = useSelector((state) => state.AirplaneReducers)
   const handleOpen = () => setOpen(true);
@@ -23,8 +23,8 @@ const NewAirplane = () => {
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
-      const response = await dispatch(AddAirplaneAction(values));
-      dispatch(GetAirplaneAction());
+      const response = await dispatch(AddAirplaneTypeAction(values));
+      dispatch(GetAirplaneTypeAction());
 
       resetForm();
       handleClose();
@@ -42,7 +42,7 @@ const NewAirplane = () => {
   return (
     <>
       <Button variant="contained" color="success" onClick={handleOpen}>
-        <AddIcon /> New Airplane
+        <AddIcon /> New Airplane Type
       </Button>
       <Modals
         open={open}
@@ -70,7 +70,7 @@ const NewAirplane = () => {
                 {/* <LockOutlinedIcon /> */}
               </Avatar>
               <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                Add New Airplane
+                Add New Airplane Type
               </Typography>
 
               <form onSubmit={handleSubmit}>
@@ -176,4 +176,4 @@ const NewAirplane = () => {
   )
 }
 
-export default NewAirplane
+export default NewAirplaneType

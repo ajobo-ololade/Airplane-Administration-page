@@ -8,29 +8,35 @@ import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Alert from '@mui/material/Alert';
+import { LoginAction } from '../../redux/actions/authAction';
+import { useDispatch } from 'react-redux';
+import { LoadingButton } from '@mui/lab';
 
 
 const Login = () => {
 
+    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false);
     const formik = useFormik({
         initialValues: {
-            username: ``,
+            email: ``,
             password: '',
         },
 
         onSubmit: async (values, { resetForm }) => {
             console.log(values);
+            const data = await dispatch(LoginAction(values))
+            console.log(data);
         },
 
         validationSchema: Yup.object().shape({
-            username: Yup.string().required('Username is required'),
+            // username: Yup.string().required('Username is required'),
             email: Yup.string().required('Email is required'),
             password: Yup.string().required('Password is required'),
         }),
     });
 
-    const { handleSubmit, errors, touched, getFieldProps, resetForm } = formik
+    const { handleSubmit, errors, touched, getFieldProps, resetForm, isSubmitting } = formik
     const handleShowPassword = () => {
         setShowPassword((show) => !show);
     };
@@ -74,13 +80,13 @@ const Login = () => {
 
                                         <TextField
 
-                                            id='username'
-                                            label='Username'
+                                            id='email'
+                                            label='Email'
                                             size='small'
                                             fullWidth
-                                            {...getFieldProps('username')}
-                                            error={Boolean(errors.username && touched.username)}
-                                            helperText={touched.username && errors.username}
+                                            {...getFieldProps('email')}
+                                            error={Boolean(errors.email && touched.email)}
+                                            helperText={touched.email && errors.email}
 
                                         />
                                     </Grid>
@@ -122,13 +128,15 @@ const Login = () => {
                                         }}
                                     >
 
-                                        <Button
-                                            variant={'contained'}
+                                        <LoadingButton
+                                            type="submit"
                                             fullWidth
-                                            type='submit'
+                                            color="primary"
+                                            variant="contained"
+                                            loading={isSubmitting}
                                         >
-                                            Sign Up
-                                        </Button>
+                                            Login
+                                        </LoadingButton>
 
                                     </Grid>
 

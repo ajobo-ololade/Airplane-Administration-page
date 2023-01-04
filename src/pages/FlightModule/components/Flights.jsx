@@ -61,8 +61,8 @@ const Flights = () => {
   };
   return (
     <>
-      <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
-      <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+      <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
+      <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} handleDelClose={handleDelClose} />
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

@@ -17,9 +17,7 @@ const NewAirplaneType = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      manufacturer: '',
-      model: '',
-      aircraft_type: ''
+      name: '',
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
@@ -32,9 +30,7 @@ const NewAirplaneType = () => {
     },
 
     validationSchema: Yup.object().shape({
-      model: Yup.string().required('Model is required'),
-      manufacturer: Yup.string().required('Manufacturer is required'),
-      aircraft_type: Yup.string().required('Aircraft Type is required'),
+      name: Yup.string().required('Name is required'),
     }),
   });
 
@@ -86,62 +82,18 @@ const NewAirplaneType = () => {
 
                     <TextField
 
-                      id='manufacturer'
-                      label='Manufacturer'
+                      id='name'
+                      label='Name'
                       size='small'
                       fullWidth
-                      {...getFieldProps('manufacturer')}
-                      error={Boolean(errors.manufacturer && touched.manufacturer)}
-                      helperText={touched.manufacturer && errors.manufacturer}
+                      {...getFieldProps('name')}
+                      error={Boolean(errors.name && touched.name)}
+                      helperText={touched.name && errors.name}
 
                     />
                   </Grid>
 
-                  <Grid item xs={12}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
-                  >
-
-                    <TextField
-
-                      id='model'
-                      label='Model'
-                      size='small'
-                      fullWidth
-                      {...getFieldProps('model')}
-                      error={Boolean(errors.model && touched.model)}
-                      helperText={touched.model && errors.model}
-
-                    />
-
-                  </Grid>
-
-                  <Grid item xs={12}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
-                  >
-
-                    <TextField
-
-                      id='aircraf_type'
-                      label='Aircraft Type'
-                      size='small'
-                      fullWidth
-                      {...getFieldProps('aircraft_type')}
-                      error={Boolean(errors.aircraft_type && touched.aircraft_type)}
-                      helperText={touched.aircraft_type && errors.aircraft_type}
-
-                    />
-
-                  </Grid>
-
-
+                  
                   <Grid item xs={12}
                     sx={{
                       display: 'flex',

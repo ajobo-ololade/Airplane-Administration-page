@@ -5,24 +5,15 @@ import { staffActionTypes, messageActionType } from "../types";
 export const GetStaffAction = () => async (dispatch) => {
 
     try {
-        const response = await getStaffRequest();
-        console.log(response.employee);
+        const data = await getStaffRequest();
+        // console.log(data.employee);
         
-        return dispatch({
+        dispatch({
             type: staffActionTypes.GET_STAFF,
-            payload: response?.employee,
+            payload: data?.employee,
         })
 
-
-
-        //     const response = await getStaffRequest();
-        //     console.log(response);
-
-        //     if (response?.status === 200) {
-
-        // };
-        // 
-        // return response;
+        return data
 
     } catch (error) {
         console.log(error);
@@ -33,17 +24,19 @@ export const GetStaffAction = () => async (dispatch) => {
 
 export const AddStaffAction = (obj) => async (dispatch) => {
     try{
-        const response = await addStaffRequest(obj);
-        // console.log(response.message);
-        if(response?.message === true){
+        const data = await addStaffRequest(obj);
+        // console.log(data.message);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetStaffAction())
         }
+
+        return data
 
     }catch(error) {
   console.log(error);
@@ -53,17 +46,19 @@ export const AddStaffAction = (obj) => async (dispatch) => {
 export const EditStaffAction = (value) => async (dispatch) => {
 
     try{
-        const response = await editStaffRequest(value);
-        console.log(response.message);
-        if(response?.message === true){
+        const data = await editStaffRequest(value);
+        console.log(data.message);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetStaffAction())
         }
+
+        return data
 
     }catch(error) {
   console.log(error);
@@ -73,17 +68,19 @@ export const EditStaffAction = (value) => async (dispatch) => {
 export const DeleteStaffAction = (value) => async (dispatch) => {
     
     try{
-        const response = await deleteStaffRequest(value);
-        console.log(response.message);
-        if(response?.message === true){
+        const data = await deleteStaffRequest(value);
+        console.log(data);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetStaffAction())
         }
+
+        return data
 
     }catch(error) {
   console.log(error);

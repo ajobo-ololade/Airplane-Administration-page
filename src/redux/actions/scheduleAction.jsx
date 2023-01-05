@@ -42,10 +42,10 @@ export const AddScheduleAction = (obj) => async (dispatch) => {
  }
 }
 
-export const EditScheduleAction = (id, value) => async (dispatch) => {
+export const EditScheduleAction = (value) => async (dispatch) => {
 
     try{
-        const data = await editScheduleRequest(id, value);
+        const data = await editScheduleRequest(value);
         console.log(data);
         if(data?.message === true){
 

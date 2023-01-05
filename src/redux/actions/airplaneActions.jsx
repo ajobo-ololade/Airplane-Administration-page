@@ -7,24 +7,15 @@ import { airplaneActionTypes, messageActionType } from "../types";
 export const GetAirplaneAction = () => async (dispatch) => {
 
     try {
-        const response = await getAirplaneRequest();
-        // console.log(response.airplane);
+        const data = await getAirplaneRequest();
+        // console.log(data.airplane);
         
-        return dispatch({
+       dispatch({
             type: airplaneActionTypes.GET_AIRPLANE,
-            payload: response?.airplane,
+            payload: data?.airplane,
         })
 
-
-
-        //     const response = await getAirplaneRequest();
-        //     console.log(response);
-
-        //     if (response?.status === 200) {
-
-        // };
-        // 
-        // return response;
+        return data
 
     } catch (error) {
         console.log(error);
@@ -35,37 +26,41 @@ export const GetAirplaneAction = () => async (dispatch) => {
 
 export const AddAirplaneAction = (obj) => async (dispatch) => {
     try{
-        const response = await addAirplaneRequest(obj);
-        // console.log(response.message);
-        if(response?.message === true){
+        const data = await addAirplaneRequest(obj);
+        // console.log(data.message);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetAirplaneAction())
         }
+
+        return data
 
     }catch(error) {
   console.log(error);
  }
 }
 
-export const EditAirplaneAction = (id, value) => async (dispatch) => {
+export const EditAirplaneAction = (value) => async (dispatch) => {
 
     try{
-        const response = await editAirplaneRequest(id, value);
-        console.log(response.message);
-        if(response?.message === true){
+        const data = await editAirplaneRequest(value);
+        console.log(data.message);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetAirplaneAction())
         }
+
+        return data
 
     }catch(error) {
   console.log(error);
@@ -75,18 +70,19 @@ export const EditAirplaneAction = (id, value) => async (dispatch) => {
 export const DeleteAirplaneAction = (value) => async (dispatch) => {
     
     try{
-        console.log(value);
-        const response = await deleteAirplaneRequest(value);
-        console.log(response);
-        if(response?.message === true){
+        const data = await deleteAirplaneRequest(value);
+        console.log(data);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetAirplaneAction())
         }
+
+        return data
 
     }catch(error) {
   console.log(error);

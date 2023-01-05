@@ -1,6 +1,6 @@
-import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardContent, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { DeleteAirplaneAction, EditAirplaneAction, GetAirplaneAction } from "../../../redux/actions/airplaneActions";
+import { DeleteAirplaneTypeAction, EditAirplaneTypeAction, GetAirplaneTypeAction } from "../../../redux/actions/airplaneTypeAction";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -13,22 +13,15 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    // bgcolor: 'background.paper',
-    // border: '2px solid #000',
-    // boxShadow: 24,
     p: 4,
-    // backgroundColor: 'white'
 };
 
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
 
     useEffect(() => {
         if (editObj) {
-            const { manufacturer, model, aircraft_type, } = editObj;
-            //   const priviledgeArray = JSON.parse(priviledges);
-            setFieldValue('manufacturer', manufacturer);
-            setFieldValue(' model', model);
-            setFieldValue('aircraft_type', aircraft_type);
+            const { name } = editObj;
+            setFieldValue('name', name);
         }
     }, [editObj]);
 
@@ -36,17 +29,14 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     const formik = useFormik({
         initialValues: {
 
-            manufacturer: '',
-            model: '',
-            aircraft_type: ''
+            name: '',
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            console.log(editObj.numser);
-            // values.numser = editObj.numser
+            values.id = editObj.numser
             console.log(values);
-            const response = await dispatch(EditAirplaneAction(editObj.numser, values));
-            dispatch(GetAirplaneAction());
+            const response = await dispatch(EditAirplaneTypeAction(values));
+            dispatch(GetAirplaneTypeAction());
 
             resetForm();
             handleEditClose();
@@ -54,9 +44,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         validationSchema: Yup.object().shape({
-            model: Yup.string().required('Model is required'),
-            manufacturer: Yup.string().required('Manufacturer is required'),
-            aircraft_type: Yup.string().required('Aircraft Type is required'),
+            name: Yup.string().required('Name is required'),
         }),
     });
 
@@ -108,67 +96,19 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='manufacturer'
-                                            label='Manufacturer'
+                                            id='name'
+                                            label='Name'
                                             size='small'
                                             fullWidth
-                                            value={values.manufacturer}
+                                            value={values.name}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.manufacturer && touched.manufacturer)}
-                                            helperText={touched.manufacturer && errors.manufacturer}
+                                            error={Boolean(errors.name && touched.name)}
+                                            helperText={touched.name && errors.name}
 
                                         />
                                     </Grid>
 
-                                    <Grid item xs={12}
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-
-                                        <TextField
-
-                                            id='model'
-                                            label='Model'
-                                            size='small'
-                                            fullWidth
-                                            value={values.model}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            error={Boolean(errors.model && touched.model)}
-                                            helperText={touched.model && errors.model}
-
-                                        />
-
-                                    </Grid>
-
-                                    <Grid item xs={12}
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-
-                                        <TextField
-
-
-                                            id='aircraf_type'
-                                            label='Aircraft Type'
-                                            size='small'
-                                            fullWidth
-                                            value={values.aircraft_type}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            error={Boolean(errors.aircraft_type && touched.aircraft_type)}
-                                            helperText={touched.aircraft_type && errors.aircraft_type}
-
-                                        />
-
-                                    </Grid>
 
                                     <Grid item xs={12}
                                         sx={{
@@ -205,21 +145,13 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 }
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
-    useEffect(() => {
-        // if (editObj) {
-        //   const { manufacturer,  model, aircraft_type, } = editObj;
-        // //   const priviledgeArray = JSON.parse(priviledges);
-        //   setFieldValue('manufacturer', manufacturer);
-        //   setFieldValue(' model',  model);
-        //   setFieldValue('aircraft_type', aircraft_type);
-        // }
-    }, [delObj]);
+    useEffect(() => {}, [delObj]);
 
     const dispatch = useDispatch();
     console.log(delObj.numser);
     const handleDelete = async () => {
-        const response = await dispatch(DeleteAirplaneAction(delObj.numser))
-        dispatch(GetAirplaneAction());
+        const response = await dispatch(DeleteAirplaneTypeAction(delObj.numser))
+        dispatch(GetAirplaneTypeAction());
     }
     return (
         <Modal

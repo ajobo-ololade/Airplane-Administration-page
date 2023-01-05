@@ -16,9 +16,14 @@ const NewSchedule = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      manufacturer: '',
-      model: '',
-      aircraft_type: ''
+      arr: '',
+      arr_time: '',
+      capacity: '',
+      dep_time: '',
+      des: '',
+      flightnum: '',
+      schedulenum: '',
+
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
@@ -31,13 +36,17 @@ const NewSchedule = () => {
     },
 
     validationSchema: Yup.object().shape({
-      model: Yup.string().required('Model is required'),
-      manufacturer: Yup.string().required('Manufacturer is required'),
-      aircraft_type: Yup.string().required('Aircraft Type is required'),
+      arr: Yup.string().required('Arriver is required'),
+      arr_time: Yup.string().required('Arriver time is required'),
+      capacity: Yup.string().required('Capacity is required'),
+      dep_time: Yup.string().required('Depature time is required'),
+      des: Yup.string().required('Destination is required'),
+      flightnum: Yup.string().required('Flightnum is required'),
+      schedulenum: Yup.string().required('Schedulenum is required'),
     }),
   });
 
-  const { handleSubmit, errors, touched, getFieldProps, resetForm, isSubmitting } = formik
+  const { handleSubmit, errors, touched, getFieldProps, isSubmitting } = formik
   return (
     <>
       <Button variant="contained" color="success" onClick={handleOpen}>
@@ -85,13 +94,13 @@ const NewSchedule = () => {
 
                     <TextField
 
-                      id='manufacturer'
-                      label='Manufacturer'
+                      id='arr'
+                      label='Arriver'
                       size='small'
                       fullWidth
-                      {...getFieldProps('manufacturer')}
-                      error={Boolean(errors.manufacturer && touched.manufacturer)}
-                      helperText={touched.manufacturer && errors.manufacturer}
+                      {...getFieldProps('arr')}
+                      error={Boolean(errors.arr && touched.arr)}
+                      helperText={touched.arr && errors.arr}
 
                     />
                   </Grid>
@@ -106,13 +115,14 @@ const NewSchedule = () => {
 
                     <TextField
 
-                      id='model'
-                      label='Model'
+                      id='arr_time'
+                      label='Arriver Time'
                       size='small'
                       fullWidth
-                      {...getFieldProps('model')}
-                      error={Boolean(errors.model && touched.model)}
-                      helperText={touched.model && errors.model}
+                      type='date'
+                      {...getFieldProps('arr_time')}
+                      error={Boolean(errors.arr_time && touched.arr_time)}
+                      helperText={touched.arr_time && errors.arr_time}
 
                     />
 
@@ -128,13 +138,102 @@ const NewSchedule = () => {
 
                     <TextField
 
-                      id='aircraf_type'
-                      label='Aircraft Type'
+                      id='capacity'
+                      label='Capacity'
                       size='small'
                       fullWidth
-                      {...getFieldProps('aircraft_type')}
-                      error={Boolean(errors.aircraft_type && touched.aircraft_type)}
-                      helperText={touched.aircraft_type && errors.aircraft_type}
+                      {...getFieldProps('capacity')}
+                      error={Boolean(errors.capacity && touched.capacity)}
+                      helperText={touched.capacity && errors.capacity}
+
+                    />
+
+                  </Grid>
+
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <TextField
+
+                      id='dep_time'
+                      label='departure Time'
+                      size='small'
+                      type='date'
+                      fullWidth
+                      {...getFieldProps('dep_time')}
+                      error={Boolean(errors.dep_time && touched.dep_time)}
+                      helperText={touched.dep_time && errors.dep_time}
+
+                    />
+
+                  </Grid>
+
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <TextField
+
+                      id='des'
+                      label='Destination'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('des')}
+                      error={Boolean(errors.des && touched.des)}
+                      helperText={touched.des && errors.des}
+
+                    />
+
+                  </Grid>
+
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <TextField
+
+                      id='flightnum'
+                      label='Flight Number'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('flightnum')}
+                      error={Boolean(errors.flightnum && touched.flightnum)}
+                      helperText={touched.flightnum && errors.flightnum}
+
+                    />
+
+                  </Grid>
+
+                  <Grid item xs={12}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+
+                    <TextField
+
+                      id='schedulenum'
+                      label='Schedule Number'
+                      size='small'
+                      fullWidth
+                      {...getFieldProps('schedulenum')}
+                      error={Boolean(errors.schedulenum && touched.schedulenum)}
+                      helperText={touched.schedulenum && errors.schedulenum}
 
                     />
 

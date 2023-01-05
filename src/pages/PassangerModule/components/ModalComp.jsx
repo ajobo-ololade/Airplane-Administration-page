@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import LoadingButton from '@mui/lab/LoadingButton';
-import { EditPassengerAction } from "../../../redux/actions/passengerAction";
+import { DeletePassengerAction, EditPassengerAction, GetPassengerAction } from "../../../redux/actions/passengerAction";
 
 const style = {
     position: 'absolute',
@@ -45,7 +45,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
             values.id = editObj.pasID
-            console.log(values);
+            console.log(editObj.pasID);
             const response = await dispatch(EditPassengerAction(values));
             console.log(response);
 
@@ -245,9 +245,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     )
 }
 
-export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
-    const handleDelete = () => {
-        console.log(delObj.pasID);
+export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelClose }) => {
+    const dispatch = useDispatch()
+    const handleDelete = async () => {
+        const pasID = delObj.pasID
+        console.log(pasID);
+        const response = await dispatch(DeletePassengerAction(pasID))
+        console.log(response);
+        dispatch(GetPassengerAction())
+        handleDelClose()
     }
     return (
         <Modal

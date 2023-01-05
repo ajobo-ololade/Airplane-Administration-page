@@ -1,30 +1,19 @@
 import axios from "axios";
 import { addFlightRequest, deleteFlightRequest, editFlightRequest, getFlightRequest } from "../../api/flightRequests";
-import { flightActionTypes, FlightActionTypes, messageActionType } from "../types";
-// import axios from ".";
-// import axios from "../../api";
+import { flightActionTypes, messageActionType } from "../types";
 
 export const GetFlightAction = () => async (dispatch) => {
 
     try {
-        const response = await getFlightRequest();
-        // console.log(response.Flight);
+        const data = await getFlightRequest();
+        // console.log(data.Flight);
         
-        return dispatch({
+        dispatch({
             type: flightActionTypes.GET_FLIGHT,
-            payload: response?.flight,
+            payload: data?.flight,
         })
 
-
-
-        //     const response = await getFlightRequest();
-        //     console.log(response);
-
-        //     if (response?.status === 200) {
-
-        // };
-        // 
-        // return response;
+        return data;
 
     } catch (error) {
         console.log(error);
@@ -33,10 +22,10 @@ export const GetFlightAction = () => async (dispatch) => {
 
 }
 
-export const AddFlightAction = (obj) => async (dispatch) => {
+export const AddFlightAction = (value) => async (dispatch) => {
     try{
-        const data = await addFlightRequest(obj);
-        console.log(data);
+        const data = await addFlightRequest(value);
+        // console.log(data);
         if(data?.message === true){
 
             dispatch({
@@ -64,7 +53,8 @@ export const EditFlightAction = (value) => async (dispatch) => {
 
     try{
         const data = await editFlightRequest(value);
-        console.log(data.message);
+        console.log(data)
+
         if(data?.message === true){
 
             dispatch({
@@ -72,7 +62,7 @@ export const EditFlightAction = (value) => async (dispatch) => {
                 payload: data.message,
             })
 
-            dispatch(GetFlightAction())
+            dispatch(GetFlightAction());
         }
 
         return data
@@ -86,15 +76,15 @@ export const DeleteFlightAction = (value) => async (dispatch) => {
     try{
         const data = await deleteFlightRequest(value);
         console.log(data);
-        // if(data?.message === true){
+        if(data?.message === true){
 
-        //     dispatch({
-        //         type: messageActionType.SUCCESS_MESSAGE,
-        //         payload: data.message,
-        //     })
+            dispatch({
+                type: messageActionType.SUCCESS_MESSAGE,
+                payload: data.message,
+            })
 
-        //     dispatch(GetFlightAction())
-        // }
+            dispatch(GetFlightAction())
+        }
         return data
     }catch(error) {
   console.log(error);

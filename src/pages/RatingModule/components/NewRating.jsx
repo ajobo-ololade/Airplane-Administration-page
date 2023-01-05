@@ -4,8 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/airplaneActions';
+import { AddRatingAction, GetRatingAction } from '../../../redux/actions/ratingAction';
 import { useDispatch, useSelector } from 'react-redux';
 import  LoadingButton  from '@mui/lab/LoadingButton';
 
@@ -17,14 +16,13 @@ const NewRating = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      manufacturer: '',
-      model: '',
-      aircraft_type: ''
+      name: '',
+      aircraft_type: '',
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
-      const response = await dispatch(AddAirplaneAction(values));
-      dispatch(GetAirplaneAction());
+      const response = await dispatch(AddRatingAction(values));
+      dispatch(GetRatingAction());
 
       resetForm();
       handleClose();
@@ -32,9 +30,8 @@ const NewRating = () => {
     },
 
     validationSchema: Yup.object().shape({
-      model: Yup.string().required('Model is required'),
-      manufacturer: Yup.string().required('Manufacturer is required'),
-      aircraft_type: Yup.string().required('Aircraft Type is required'),
+      name: Yup.string().required('Name is required'),
+      aircraft_type: Yup.string().required('Aircraft Type is required')
     }),
   });
 
@@ -86,13 +83,13 @@ const NewRating = () => {
 
                     <TextField
 
-                      id='manufacturer'
-                      label='Manufacturer'
+                      id='name'
+                      label='Name'
                       size='small'
                       fullWidth
-                      {...getFieldProps('manufacturer')}
-                      error={Boolean(errors.manufacturer && touched.manufacturer)}
-                      helperText={touched.manufacturer && errors.manufacturer}
+                      {...getFieldProps('name')}
+                      error={Boolean(errors.name && touched.name)}
+                      helperText={touched.name && errors.name}
 
                     />
                   </Grid>
@@ -107,29 +104,7 @@ const NewRating = () => {
 
                     <TextField
 
-                      id='model'
-                      label='Model'
-                      size='small'
-                      fullWidth
-                      {...getFieldProps('model')}
-                      error={Boolean(errors.model && touched.model)}
-                      helperText={touched.model && errors.model}
-
-                    />
-
-                  </Grid>
-
-                  <Grid item xs={12}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
-                  >
-
-                    <TextField
-
-                      id='aircraf_type'
+                      id='aircraft_type'
                       label='Aircraft Type'
                       size='small'
                       fullWidth
@@ -138,7 +113,6 @@ const NewRating = () => {
                       helperText={touched.aircraft_type && errors.aircraft_type}
 
                     />
-
                   </Grid>
 
 

@@ -13,7 +13,7 @@ import { DeleteModal, EditModal } from './ModalComp';
 const Staffs = ({ staffs }) => {
     const { STAFF } = useSelector((state) => state.StaffReducers);
 
-  console.log(STAFF);
+//   console.log(STAFF);
     const headerData = [
         {
             label: `S/N`,
@@ -60,7 +60,7 @@ const Staffs = ({ staffs }) => {
        setDelObj(e)
        handleDelOpen()
     }
-    console.log(delObj);
+    // console.log(delObj);
     const handleEditOpen = () => setEditOpen(true);
     const handleEditClose = () => setEditOpen(false);
     const handleDelOpen = () => setDelOpen(true);

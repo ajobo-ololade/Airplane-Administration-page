@@ -1,12 +1,11 @@
 import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { DeleteAirplaneAction, EditAirplaneAction, GetAirplaneAction } from "../../../redux/actions/airplaneActions";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import LoadingButton from '@mui/lab/LoadingButton';
-import { DeleteRatingAction, GetRatingAction } from "../../../redux/actions/ratingAction";
+import { DeleteRatingAction, GetRatingAction,EditRatingAction } from "../../../redux/actions/ratingAction";
 
 const style = {
     position: 'absolute',
@@ -44,7 +43,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             console.log(editObj.ratno);
             values.id = editObj.ratno
             console.log(values);
-            const response = await dispatch(EditAirplaneAction(values.id));
+            const response = await dispatch(EditRatingAction(values));
             dispatch(GetRatingAction());
 
             resetForm();

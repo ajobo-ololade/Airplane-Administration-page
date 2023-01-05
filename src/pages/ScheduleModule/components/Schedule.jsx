@@ -16,7 +16,7 @@ const Schedule = () => {
 
     const headerData = [
         {
-            label: `airplane id`,
+            label: `schedule num`,
         },
         {
             label: `arriver`,
@@ -37,7 +37,7 @@ const Schedule = () => {
             label: `flight num`,
         },
         {
-            label: `schedule num`,
+            label: `airplane id`,
         },
         {
             label: 'Edit',
@@ -96,14 +96,14 @@ const Schedule = () => {
                     <TableBody>
                         {SCHEDULE.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((schedule, id) => (
                             <TableRow key={id}>
-                                <TableCell sx={{ textAlign: 'center' }}>{schedule.airplaneid}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.schedulenum}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{schedule.arr}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{schedule.arr_time}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{schedule.capacity}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{schedule.dep_time}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{schedule.des}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>{schedule.flightnum}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{schedule.schedulenum}</TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}>{schedule.airplaneid}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}><EditIcon sx={{ color: 'green', cursor: 'pointer' }} onClick={(e) => edit(schedule)} /></TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}><DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} onClick={(e) => del(schedule)} /></TableCell>
                             </TableRow>

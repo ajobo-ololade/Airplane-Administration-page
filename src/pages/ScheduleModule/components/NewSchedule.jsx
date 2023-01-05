@@ -22,7 +22,7 @@ const NewSchedule = () => {
       dep_time: '',
       des: '',
       flightnum: '',
-      schedulenum: '',
+      airplaneid: '',
 
     },
 
@@ -42,7 +42,7 @@ const NewSchedule = () => {
       dep_time: Yup.string().required('Depature time is required'),
       des: Yup.string().required('Destination is required'),
       flightnum: Yup.string().required('Flightnum is required'),
-      schedulenum: Yup.string().required('Schedulenum is required'),
+      airplaneid: Yup.string().required('airpnaneid is required'),
     }),
   });
 
@@ -119,7 +119,7 @@ const NewSchedule = () => {
                       label='Arriver Time'
                       size='small'
                       fullWidth
-                      type='date'
+                      type='time'
                       {...getFieldProps('arr_time')}
                       error={Boolean(errors.arr_time && touched.arr_time)}
                       helperText={touched.arr_time && errors.arr_time}
@@ -163,7 +163,7 @@ const NewSchedule = () => {
                       id='dep_time'
                       label='departure Time'
                       size='small'
-                      type='date'
+                      type='time'
                       fullWidth
                       {...getFieldProps('dep_time')}
                       error={Boolean(errors.dep_time && touched.dep_time)}
@@ -227,13 +227,13 @@ const NewSchedule = () => {
 
                     <TextField
 
-                      id='schedulenum'
-                      label='Schedule Number'
+                      id='airplaneid'
+                      label='Airplane ID'
                       size='small'
                       fullWidth
-                      {...getFieldProps('schedulenum')}
-                      error={Boolean(errors.schedulenum && touched.schedulenum)}
-                      helperText={touched.schedulenum && errors.schedulenum}
+                      {...getFieldProps('airplaneid')}
+                      error={Boolean(errors.airplaneid && touched.airplaneid)}
+                      helperText={touched.airplaneid && errors.airplaneid}
 
                     />
 

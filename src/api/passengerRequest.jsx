@@ -6,4 +6,4 @@ export const addPasssengerRequest = (value) => axios.post(`passenger`, value).th
 
 export const editPasssengerRequest = (value) => axios.put(`passenger/${value?.id}`, value).then((res) => res.data);
 
-export const deletePasssengerRequest = (value) => axios.delete(`passenger/${value?.id}`);
+export const deletePasssengerRequest = (value) => axios.delete(`passenger/${value}`);

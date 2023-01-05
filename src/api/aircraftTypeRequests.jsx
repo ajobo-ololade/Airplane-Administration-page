@@ -6,4 +6,4 @@ export const addAirplaneTypeRequest = (value) => axios.post(`airplanetype`, valu
 
 export const editAirplaneTypeRequest = (value) => axios.put(`airplanetype/${value?.id}`, value).then((res) => res.data);
 
-export const deleteAirplaneTypeRequest = (value) => axios.delete(`airplanetype/${value?.id}`);
+export const deleteAirplaneTypeRequest = (value) => axios.delete(`airplanetype/${value}`);

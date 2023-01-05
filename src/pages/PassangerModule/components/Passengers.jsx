@@ -15,7 +15,7 @@ const Passengers = () => {
   const headerData = [
 
     {
-      label: 'Pass ID',
+      label: 'Pas ID',
     },
     {
       label: 'Surname',

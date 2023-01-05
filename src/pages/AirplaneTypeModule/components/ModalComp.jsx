@@ -33,7 +33,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            values.id = editObj.numser
+            values.id = editObj.typeid
             console.log(values);
             const response = await dispatch(EditAirplaneTypeAction(values));
             dispatch(GetAirplaneTypeAction());
@@ -148,9 +148,9 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     useEffect(() => {}, [delObj]);
 
     const dispatch = useDispatch();
-    console.log(delObj.numser);
+    console.log(delObj.typeid);
     const handleDelete = async () => {
-        const response = await dispatch(DeleteAirplaneTypeAction(delObj.numser))
+        const response = await dispatch(DeleteAirplaneTypeAction(delObj.typeid))
         dispatch(GetAirplaneTypeAction());
     }
     return (

@@ -20,14 +20,14 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
     useEffect(() => {
         if (editObj) {
-            const { arr, arr_time, capacity, dep_time, des, flightnum, schedulenum } = editObj;
+            const { arr, arr_time, capacity, dep_time, des, flightnum, airplaneid } = editObj;
             setFieldValue('arr', arr);
             setFieldValue(' arr_time', arr_time);
             setFieldValue('capacity', capacity);
             setFieldValue('dep_time', dep_time);
             setFieldValue(' des', des);
             setFieldValue('flightnum', flightnum);
-            setFieldValue('schedulenum', schedulenum);
+            setFieldValue('airplaneid', airplaneid);
         }
     }, [editObj]);
 
@@ -40,13 +40,13 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             dep_time: '',
             des: '',
             flightnum: '',
-            schedulenum: '',
+            airplaneid: '',
 
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
 
-            values.id = editObj.numser
+            values.id = editObj.schedulenum
             console.log(values);
             const response = await dispatch(EditScheduleAction(values));
             dispatch(GetScheduleAction());
@@ -63,7 +63,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             dep_time: Yup.string().required('Depature time is required'),
             des: Yup.string().required('Destination is required'),
             flightnum: Yup.string().required('Flightnum is required'),
-            schedulenum: Yup.string().required('Schedulenum is required'),
+            airplaneid: Yup.string().required('Airplaneid is required'),
         }),
     });
 
@@ -140,7 +140,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                             label='Arriver Time'
                                             size='small'
                                             fullWidth
-                                            type='date'
+                                            type='time'
                                             value={values.arr_time}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
@@ -187,7 +187,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                             id='dep_time'
                                             label='departure Time'
                                             size='small'
-                                            type='date'
+                                            type='time'
                                             fullWidth
                                             value={values.dep_time}
                                             onChange={handleChange}
@@ -255,15 +255,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='schedulenum'
-                                            label='Schedule Number'
+                                            id='airplaneid'
+                                            label='Airplane ID'
                                             size='small'
                                             fullWidth
                                             disabled
-                                            value={values.schedulenum}
+                                            value={values.airplaneid}
                                             onChange={handleChange}
-                                            onBlur={handleBlur} error={Boolean(errors.schedulenum && touched.schedulenum)}
-                                            helperText={touched.schedulenum && errors.schedulenum}
+                                            onBlur={handleBlur} error={Boolean(errors.airplaneid && touched.airplaneid)}
+                                            helperText={touched.airplaneid && errors.airplaneid}
 
                                         />
 
@@ -315,9 +315,9 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     }, [delObj]);
 
     const dispatch = useDispatch();
-    console.log(delObj.airplaneid);
+    console.log(delObj.schedulenum);
     const handleDelete = async () => {
-        const response = await dispatch(DeleteScheduleAction(delObj.airplaneid))
+        const response = await dispatch(DeleteScheduleAction(delObj.schedulenum))
         dispatch(GetScheduleAction());
     }
     return (

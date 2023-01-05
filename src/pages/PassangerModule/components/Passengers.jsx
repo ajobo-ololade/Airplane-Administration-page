@@ -10,7 +10,7 @@ import { EditModal, DeleteModal } from '../../PassangerModule/components/ModalCo
 const Passengers = () => {
   const { PASSENGER } = useSelector((state) => state.PassengerReducers);
 
-  console.log(PASSENGER);
+  // console.log(PASSENGER);
 
   const headerData = [
 
@@ -54,7 +54,7 @@ const Passengers = () => {
     setDelObj(e)
     handleDelOpen()
   }
-  console.log(delObj);
+  // console.log(delObj);
   const handleEditOpen = () => setEditOpen(true);
   const handleEditClose = () => setEditOpen(false);
   const handleDelOpen = () => setDelOpen(true);
@@ -72,8 +72,8 @@ const Passengers = () => {
   };
   return (
     <>
-      <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
-      <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+      <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
+      <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} handleDelClose={handleDelClose} />
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

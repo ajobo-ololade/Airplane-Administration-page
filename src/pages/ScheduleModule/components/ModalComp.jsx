@@ -13,39 +13,42 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    // bgcolor: 'background.paper',
-    // border: '2px solid #000',
-    // boxShadow: 24,
     p: 4,
-    // backgroundColor: 'white'
 };
 
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
 
     useEffect(() => {
         if (editObj) {
-            const { manufacturer, model, aircraft_type, } = editObj;
-            //   const priviledgeArray = JSON.parse(priviledges);
-            setFieldValue('manufacturer', manufacturer);
-            setFieldValue(' model', model);
-            setFieldValue('aircraft_type', aircraft_type);
+            const { arr, arr_time, capacity, dep_time, des, flightnum, schedulenum } = editObj;
+            setFieldValue('arr', arr);
+            setFieldValue(' arr_time', arr_time);
+            setFieldValue('capacity', capacity);
+            setFieldValue('dep_time', dep_time);
+            setFieldValue(' des', des);
+            setFieldValue('flightnum', flightnum);
+            setFieldValue('schedulenum', schedulenum);
         }
     }, [editObj]);
 
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
+            arr: '',
+            arr_time: '',
+            capacity: '',
+            dep_time: '',
+            des: '',
+            flightnum: '',
+            schedulenum: '',
 
-            manufacturer: '',
-            model: '',
-            aircraft_type: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            console.log(editObj.numser);
-            // values.numser = editObj.numser
+
+            values.id = editObj.numser
             console.log(values);
-            const response = await dispatch(EditScheduleAction(editObj.numser, values));
+            const response = await dispatch(EditScheduleAction(values));
             dispatch(GetScheduleAction());
 
             resetForm();
@@ -54,9 +57,13 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         validationSchema: Yup.object().shape({
-            model: Yup.string().required('Model is required'),
-            manufacturer: Yup.string().required('Manufacturer is required'),
-            aircraft_type: Yup.string().required('Aircraft Type is required'),
+            arr: Yup.string().required('Arriver is required'),
+            arr_time: Yup.string().required('Arriver time is required'),
+            capacity: Yup.string().required('Capacity is required'),
+            dep_time: Yup.string().required('Depature time is required'),
+            des: Yup.string().required('Destination is required'),
+            flightnum: Yup.string().required('Flightnum is required'),
+            schedulenum: Yup.string().required('Schedulenum is required'),
         }),
     });
 
@@ -68,7 +75,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             sx={{ xs: {} }}
         >
             <Box sx={style}>
-            {/* <Grid sx={{height: '100%', alignItem: 'center', justifyContent: 'center'}}>
+                {/* <Grid sx={{height: '100%', alignItem: 'center', justifyContent: 'center'}}>
                 <Grid xs={12} sm={6} lg={4} sx={{border:' 2px solid #000', boxShadow: 24}}>
                     <Grid container>
                         <Grid item>
@@ -95,7 +102,6 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                             </Typography>
 
                             <form onSubmit={handleSubmit}>
-
                                 <Grid container spacing={2} sx={{ marginTop: '5px' }}>
 
                                     <Grid item xs={12}
@@ -108,15 +114,14 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='manufacturer'
-                                            label='Manufacturer'
+                                            id='arr'
+                                            label='Arriver'
                                             size='small'
                                             fullWidth
-                                            value={values.manufacturer}
+                                            value={values.arr}
                                             onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            error={Boolean(errors.manufacturer && touched.manufacturer)}
-                                            helperText={touched.manufacturer && errors.manufacturer}
+                                            onBlur={handleBlur} error={Boolean(errors.arr && touched.arr)}
+                                            helperText={touched.arr && errors.arr}
 
                                         />
                                     </Grid>
@@ -131,15 +136,16 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='model'
-                                            label='Model'
+                                            id='arr_time'
+                                            label='Arriver Time'
                                             size='small'
                                             fullWidth
-                                            value={values.model}
+                                            type='date'
+                                            value={values.arr_time}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.model && touched.model)}
-                                            helperText={touched.model && errors.model}
+                                            error={Boolean(errors.arr_time && touched.arr_time)}
+                                            helperText={touched.arr_time && errors.arr_time}
 
                                         />
 
@@ -155,20 +161,114 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-
-                                            id='aircraf_type'
-                                            label='Aircraft Type'
+                                            id='capacity'
+                                            label='Capacity'
                                             size='small'
                                             fullWidth
-                                            value={values.aircraft_type}
+                                            value={values.capacity}
                                             onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            error={Boolean(errors.aircraft_type && touched.aircraft_type)}
-                                            helperText={touched.aircraft_type && errors.aircraft_type}
+                                            onBlur={handleBlur} error={Boolean(errors.capacity && touched.capacity)}
+                                            helperText={touched.capacity && errors.capacity}
 
                                         />
 
                                     </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='dep_time'
+                                            label='departure Time'
+                                            size='small'
+                                            type='date'
+                                            fullWidth
+                                            value={values.dep_time}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur} error={Boolean(errors.dep_time && touched.dep_time)}
+                                            helperText={touched.dep_time && errors.dep_time}
+
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='des'
+                                            label='Destination'
+                                            size='small'
+                                            fullWidth
+                                            value={values.des}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur} error={Boolean(errors.des && touched.des)}
+                                            helperText={touched.des && errors.des}
+
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='flightnum'
+                                            label='Flight Number'
+                                            size='small'
+                                            fullWidth
+                                            disabled
+                                            value={values.flightnum}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur} error={Boolean(errors.flightnum && touched.flightnum)}
+                                            helperText={touched.flightnum && errors.flightnum}
+
+                                        />
+
+                                    </Grid>
+
+                                    <Grid item xs={12}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+
+                                        <TextField
+
+                                            id='schedulenum'
+                                            label='Schedule Number'
+                                            size='small'
+                                            fullWidth
+                                            disabled
+                                            value={values.schedulenum}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur} error={Boolean(errors.schedulenum && touched.schedulenum)}
+                                            helperText={touched.schedulenum && errors.schedulenum}
+
+                                        />
+
+                                    </Grid>
+
 
                                     <Grid item xs={12}
                                         sx={{
@@ -185,9 +285,8 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                             variant="contained"
                                             loading={isSubmitting}
                                         >
-                                            Update
+                                            Add
                                         </LoadingButton>
-
                                     </Grid>
 
                                 </Grid>
@@ -216,9 +315,9 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     }, [delObj]);
 
     const dispatch = useDispatch();
-    console.log(delObj.numser);
+    console.log(delObj.airplaneid);
     const handleDelete = async () => {
-        const response = await dispatch(DeleteScheduleAction(delObj.numser))
+        const response = await dispatch(DeleteScheduleAction(delObj.airplaneid))
         dispatch(GetScheduleAction());
     }
     return (

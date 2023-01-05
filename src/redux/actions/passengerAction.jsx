@@ -1,28 +1,18 @@
-import axios from "axios";
 import { addPasssengerRequest, deletePasssengerRequest, editPasssengerRequest, getPasssengerRequest } from "../../api/passengerRequest";
 import { passengerActionTypes, messageActionType } from "../types";
 
 export const GetPassengerAction = () => async (dispatch) => {
 
     try {
-        const response = await getPasssengerRequest();
-        // console.log(response.Passenger);
+        const data = await getPasssengerRequest();
+        // console.log(data.Passenger);
         
-        return dispatch({
+       dispatch({
             type: passengerActionTypes.GET_PASSENGER,
-            payload: response?.passenger,
+            payload: data?.passenger,
         })
 
-
-
-        //     const response = await getPassengerRequest();
-        //     console.log(response);
-
-        //     if (response?.status === 200) {
-
-        // };
-        // 
-        // return response;
+        return data;
 
     } catch (error) {
         console.log(error);
@@ -31,19 +21,21 @@ export const GetPassengerAction = () => async (dispatch) => {
 
 }
 
-export const AddPassengerAction = (obj) => async (dispatch) => {
+export const AddPassengerAction = (value) => async (dispatch) => {
     try{
-        const response = await addPasssengerRequest(obj);
-        // console.log(response.message);
-        if(response?.message === true){
+        const data = await addPasssengerRequest(value);
+        console.log(data);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetPassengerAction())
         }
+
+        return data;
 
     }catch(error) {
   console.log(error);
@@ -53,17 +45,19 @@ export const AddPassengerAction = (obj) => async (dispatch) => {
 export const EditPassengerAction = (value) => async (dispatch) => {
 
     try{
-        const response = await editPasssengerRequest(value);
-        console.log(response.message);
-        if(response?.message === true){
+        const data = await editPasssengerRequest(value);
+        console.log(data.message);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetPassengerAction())
         }
+
+        return data;
 
     }catch(error) {
   console.log(error);
@@ -73,17 +67,19 @@ export const EditPassengerAction = (value) => async (dispatch) => {
 export const DeletePassengerAction = (value) => async (dispatch) => {
     
     try{
-        const response = await deletePasssengerRequest(value);
-        console.log(response.message);
-        if(response?.message === true){
+        const data = await deletePasssengerRequest(value);
+        console.log(data);
+        if(data?.message === true){
 
             dispatch({
                 type: messageActionType.SUCCESS_MESSAGE,
-                payload: response.message,
+                payload: data.message,
             })
 
             dispatch(GetPassengerAction())
         }
+
+        return data;
 
     }catch(error) {
   console.log(error);

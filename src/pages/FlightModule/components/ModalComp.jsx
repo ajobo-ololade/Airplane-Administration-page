@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from "react";
 import { DeleteFlightAction, EditFlightAction, GetFlightAction } from "../../../redux/actions/flightAction";
-import axios from "axios";
 import { LoadingButton } from "@mui/lab";
 
 const style = {
@@ -14,11 +13,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    // bgcolor: 'background.paper',
-    // border: '2px solid #000',
-    // boxShadow: 24,
     p: 4,
-    // backgroundColor: 'white'
 };
 
 export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClose }) => {
@@ -44,30 +39,14 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            // values.flightnum = editObj.flightnum
-            console.log(values);
-            const data = await dispatch(EditFlightAction(editObj.flightnum, values));
-            if (data.message === true) {
-                setSubmitting(true);
-                setSMessage(true);
-                dispatch(GetFlightAction());
-                setTimeout(() => {
-                    setEMessage(false)
-                }, 3000);
-                resetForm()
-                handleEditClose();
-            }
-            else {
-                setEMessage(true)
-                setTimeout(() => {
-                    setEMessage(false)
-                }, 3000);
-                handleEditClose();
-            }
+            values.id = editObj.flightnum
 
-            // resetForm();
-            // handleEditClose();
+            const data = await dispatch(EditFlightAction(values));
 
+            dispatch(GetFlightAction());
+            handleEditClose();
+            resetForm()
+            
         },
 
         validationSchema: Yup.object().shape({
@@ -220,23 +199,9 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelClose
     const handleDelete = async () => {
         const flightnum = delObj.flightnum
         const data = await dispatch(DeleteFlightAction(flightnum));
-        console.log(data.data);
-        if (data.data.message.success === true) {
-            dispatch(GetFlightAction());
-            setSMessage(true);
-            setTimeout(() => {
-                setEMessage(false)
-                handleDelClose();
-            }, 2000);
-        }
-        else {
-            setEMessage(true)
-            setTimeout(() => {
-                setEMessage(false)
-            }, 3000);
-            // handleDelClose();
-            setEMessage(false)
-        }
+        dispatch(GetFlightAction());
+        handleDelClose();
+   
     }
     return (
         <Modal

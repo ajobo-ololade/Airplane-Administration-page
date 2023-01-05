@@ -42,13 +42,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            console.log(editObj.numser);
-            // values.numser = editObj.numser
-            console.log(values);
-            const response = await dispatch(EditAirplaneAction(editObj.numser, values));
-            dispatch(GetAirplaneAction());
+            values.id = editObj.numser
+            const response = await dispatch(EditAirplaneAction(values));
 
-            resetForm();
+            dispatch(GetAirplaneAction());
+            // if (response.message === true) {
+        
+                resetForm();
+                
+            // }
             handleEditClose();
 
         },
@@ -160,6 +162,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                             label='Aircraft Type'
                                             size='small'
                                             fullWidth
+                                            disabled
                                             value={values.aircraft_type}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
@@ -205,20 +208,14 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 }
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
-    useEffect(() => {
-        // if (editObj) {
-        //   const { manufacturer,  model, aircraft_type, } = editObj;
-        // //   const priviledgeArray = JSON.parse(priviledges);
-        //   setFieldValue('manufacturer', manufacturer);
-        //   setFieldValue(' model',  model);
-        //   setFieldValue('aircraft_type', aircraft_type);
-        // }
-    }, [delObj]);
+    useEffect(() => {}, [delObj]);
 
     const dispatch = useDispatch();
     console.log(delObj.numser);
+    const numser = delObj.numser
     const handleDelete = async () => {
-        const response = await dispatch(DeleteAirplaneAction(delObj.numser))
+        const response = await dispatch(DeleteAirplaneAction(numser))
+        console.log(response);
         dispatch(GetAirplaneAction());
     }
     return (

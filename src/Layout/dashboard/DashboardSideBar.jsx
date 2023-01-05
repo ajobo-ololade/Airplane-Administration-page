@@ -45,22 +45,22 @@ export const DashboardSideBar = ({ }) => {
     },
     {
       title: "Schedule",
-      num: '/dashboard/schedules',
+      path: '/dashboard/schedules',
       icon: <ListAltIcon />
     },
     {
       title: "Rating",
-      num: '/dashboard/ratings',
+      path: '/dashboard/ratings',
       icon: <StarsIcon />
     },
     {
       title: "Airplane Types",
-      num: '/dashboard/airplanetypes',
+      path: '/dashboard/airplanetypes',
       icon: <ConnectingAirportsIcon />
     },
     {
       title: "Crew",
-      num: '/dashboard/crews',
+      path: '/dashboard/crews',
       icon: <AccessibleIcon />
     },
     {

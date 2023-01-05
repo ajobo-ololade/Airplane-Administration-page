@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, CardContent, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from 'react-redux';
-import { EditStaffAction } from "../../../redux/actions/staffAction";
+import { DeleteStaffAction, EditStaffAction, GetStaffAction } from "../../../redux/actions/staffAction";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect } from "react";
@@ -31,6 +31,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
+            
             surname: '',
             name: '',
             address: '',
@@ -40,8 +41,10 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
+            values.id = editObj.empnum
             const response = await dispatch(EditStaffAction(values));
-            console.log(response);
+            dispatch(GetStaffAction())
+            // console.log(response);
 
             resetForm();
             handleClose();
@@ -80,7 +83,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
                                 {/* <LockOutlinedIcon /> */}
                             </Avatar>
                             <Typography component="h3" variant="h5" sx={{ marginTop: '5px', color: '#1565c0' }}>
-                                Add New Airplane
+                                Edit Staff
                             </Typography>
 
                             <form onSubmit={handleSubmit}>
@@ -197,6 +200,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
                                             type='number'
                                             size='small'
                                             fullWidth
+                                            disabled
                                             value={values.ratingid}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
@@ -268,8 +272,12 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
 }
 
 export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
-    const handleDelete = () => {
-        console.log(delObj.model);
+    const dispatch = useDispatch();
+    const handleDelete = async () => {
+        console.log(delObj.empnum);
+        const response = await dispatch(DeleteStaffAction(delObj.empnum));
+        console.log(response);
+        dispatch(GetStaffAction())
     }
     return (
         <Modal

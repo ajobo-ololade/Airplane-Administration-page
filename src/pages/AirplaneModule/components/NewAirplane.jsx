@@ -4,7 +4,6 @@ import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/airplaneActions';
 import { useDispatch, useSelector } from 'react-redux';
 import  LoadingButton  from '@mui/lab/LoadingButton';
@@ -17,16 +16,22 @@ const NewAirplane = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
+
       manufacturer: '',
       model: '',
       aircraft_type: ''
+
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
       const response = await dispatch(AddAirplaneAction(values));
-      dispatch(GetAirplaneAction());
 
-      resetForm();
+      if (response.message === true) {
+        
+        dispatch(GetAirplaneAction());
+        resetForm();
+        
+      }
       handleClose();
 
     },

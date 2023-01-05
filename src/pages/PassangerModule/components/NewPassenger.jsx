@@ -1,13 +1,12 @@
-import { Alert, Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { Alert, Avatar, Box, Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { AddFlightAction } from '../../../redux/actions/flightAction';
+import { useDispatch } from 'react-redux';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { AddPassengerAction, GetPassengerAction } from '../../../redux/actions/passengerAction';
 
 const NewPassenger = () => {
   const [open, setOpen] = React.useState(false);
@@ -22,13 +21,14 @@ const NewPassenger = () => {
       address: '',
       phone: '',
       schedulenum: ''
+
     },
 
     onSubmit: async (values, { resetForm }) => {
 
-      const response = await dispatch(AddFlightAction(values));
+      const response = await dispatch(AddPassengerAction(values));
       console.log(response);
-
+      dispatch(GetPassengerAction())
       resetForm();
       handleClose();
 

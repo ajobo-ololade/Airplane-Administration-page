@@ -43,10 +43,10 @@ export const AddRatingAction = (obj) => async (dispatch) => {
  }
 }
 
-export const EditRatingAction = (id, value) => async (dispatch) => {
+export const EditRatingAction = (value) => async (dispatch) => {
 
     try{
-        const data = await editRatingRequest(id, value);
+        const data = await editRatingRequest(value);
         console.log(data.message);
         if(data?.message === true){
 

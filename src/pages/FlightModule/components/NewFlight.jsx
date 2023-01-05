@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Grid, MenuItem, TextField, Typography } from '@mui/material'
+import { Alert, Avatar, Box, Button, Card, CardContent, Grid,TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import Modals from '../../../components/Modal';
@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddFlightAction, GetFlightAction } from '../../../redux/actions/flightAction';
-// import { useNavigate } from 'react-router-dom';
 
 const NewFlights = () => {
   const { successMessage, errorMessage } = useSelector((state) => state.AuthReducers)
@@ -186,7 +185,7 @@ const NewFlights = () => {
                       variant="contained"
                       loading={isSubmitting}
                     >
-                      Sign up
+                      Add
                     </LoadingButton>
 
                   </Grid>

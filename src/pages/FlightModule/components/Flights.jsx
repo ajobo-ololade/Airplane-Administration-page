@@ -43,7 +43,7 @@ const Flights = () => {
     setDelObj(e)
     handleDelOpen()
   }
-  console.log(delObj);
+  // console.log(delObj);
   const handleEditOpen = () => setEditOpen(true);
   const handleEditClose = () => setEditOpen(false);
   const handleDelOpen = () => setDelOpen(true);

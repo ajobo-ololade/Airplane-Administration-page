@@ -67,7 +67,7 @@ const Airplane = () => {
     return (
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
-            <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+            <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} handleDelClose={handleDelClose} />
             <TableContainer>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 

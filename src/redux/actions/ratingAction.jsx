@@ -70,15 +70,15 @@ export const DeleteRatingAction = (value) => async (dispatch) => {
     try{
         const data = await deleteRatingRequest(value);
         console.log(data.message);
-        if(data?.message === true){
+        // if(data?.message === true){
 
-            dispatch({
-                type: messageActionType.SUCCESS_MESSAGE,
-                payload: data.message,
-            })
+        //     dispatch({
+        //         type: messageActionType.SUCCESS_MESSAGE,
+        //         payload: data.message,
+        //     })
 
-            dispatch(GetRatingAction())
-        }
+        //     dispatch(GetRatingAction())
+        // }
 
         return data
 

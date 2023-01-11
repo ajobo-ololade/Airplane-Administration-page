@@ -48,7 +48,9 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             console.log(editObj.pasID);
             const response = await dispatch(EditPassengerAction(values));
             console.log(response);
-
+            if (response?.message.success === true) {
+                dispatch(GetPassengerAction())
+            }
             resetForm();
             handleEditClose();
 

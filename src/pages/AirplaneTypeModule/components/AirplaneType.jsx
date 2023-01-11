@@ -10,7 +10,7 @@ const AirplaneType = () => {
 
     const { AIRPLANETYPE } = useSelector((state) => state.AirplaneTypeReducers);
 
-    console.log(AIRPLANETYPE);
+    // console.log(AIRPLANETYPE);
 
     const headerData = [
         {
@@ -36,7 +36,7 @@ const AirplaneType = () => {
     const [delObj, setDelObj] = React.useState({});
     const edit = (e) => {
         setEditObj(e)
-        console.log(e);
+        // console.log(e);
         handleEditOpen()
     }
     const del = (e) => {
@@ -59,7 +59,7 @@ const AirplaneType = () => {
     return (
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
-            <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+            <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} handleDelOpen={handleDelOpen} />
             <TableContainer sx={{ height: 400, overflowY: 'auto' }}>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 

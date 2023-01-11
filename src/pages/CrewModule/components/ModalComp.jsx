@@ -1,12 +1,11 @@
 import { Avatar, Button, Card, CardContent, CircularProgress, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { DeleteAirplaneAction, EditAirplaneAction, GetAirplaneAction } from "../../../redux/actions/airplaneActions";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import LoadingButton from '@mui/lab/LoadingButton';
-import { DeleteCrewAction, GetCrewAction } from "../../../redux/actions/crewAction";
+import { DeleteCrewAction, EditCrewAction, GetCrewAction } from "../../../redux/actions/crewAction";
 
 const style = {
     position: 'absolute',
@@ -25,11 +24,11 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
     useEffect(() => {
         if (editObj) {
-            const { manufacturer, model, aircraft_type, } = editObj;
+            const { empnum, role, scheduleid, } = editObj;
             //   const priviledgeArray = JSON.parse(priviledges);
-            setFieldValue('manufacturer', manufacturer);
-            setFieldValue(' model', model);
-            setFieldValue('aircraft_type', aircraft_type);
+            setFieldValue('empnum', empnum);
+            setFieldValue(' role', role);
+            setFieldValue('scheduleid', scheduleid);
         }
     }, [editObj]);
 
@@ -37,17 +36,17 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     const formik = useFormik({
         initialValues: {
 
-            manufacturer: '',
-            model: '',
-            aircraft_type: ''
+            empnum: '',
+            role: '',
+            scheduleid: ''
         },
 
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            console.log(editObj.numser);
+            console.log(editObj.crewid);
             // values.numser = editObj.numser
             console.log(values);
-            const response = await dispatch(EditAirplaneAction(editObj.numser, values));
-            dispatch(GetAirplaneAction());
+            const response = await dispatch(EditCrewAction(editObj.crewid, values));
+            dispatch(GetCrewAction());
 
             resetForm();
             handleEditClose();
@@ -55,9 +54,9 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
         },
 
         validationSchema: Yup.object().shape({
-            model: Yup.string().required('Model is required'),
-            manufacturer: Yup.string().required('Manufacturer is required'),
-            aircraft_type: Yup.string().required('Aircraft Type is required'),
+            empnum: Yup.string().required('Empnum is required'),
+            role: Yup.string().required('Role is required'),
+            scheduleid: Yup.string().required('Schedule id is required'),
         }),
     });
 
@@ -109,15 +108,16 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='manufacturer'
-                                            label='Manufacturer'
+                                            id='empnum'
+                                            label='Employee num'
                                             size='small'
                                             fullWidth
-                                            value={values.manufacturer}
+                                            value={values.empnum}
+                                            disabled
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.manufacturer && touched.manufacturer)}
-                                            helperText={touched.manufacturer && errors.manufacturer}
+                                            error={Boolean(errors.empnum && touched.empnum)}
+                                            helperText={touched.empnum && errors.empnum}
 
                                         />
                                     </Grid>
@@ -132,15 +132,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
 
                                         <TextField
 
-                                            id='model'
-                                            label='Model'
+                                            id='role'
+                                            label='Role'
                                             size='small'
                                             fullWidth
-                                            value={values.model}
+                                            value={values.role}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.model && touched.model)}
-                                            helperText={touched.model && errors.model}
+                                            error={Boolean(errors.role && touched.role)}
+                                            helperText={touched.role && errors.role}
 
                                         />
 
@@ -157,15 +157,16 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
                                         <TextField
 
 
-                                            id='aircraf_type'
-                                            label='Aircraft Type'
+                                            id='scheduleid'
+                                            label='Schedule Id'
                                             size='small'
                                             fullWidth
-                                            value={values.aircraft_type}
+                                            disabled
+                                            value={values.schedulrid}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={Boolean(errors.aircraft_type && touched.aircraft_type)}
-                                            helperText={touched.aircraft_type && errors.aircraft_type}
+                                            error={Boolean(errors.schedulrid && touched.schedulrid)}
+                                            helperText={touched.schedulrid && errors.schedulrid}
 
                                         />
 
@@ -212,8 +213,9 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
 
     const dispatch = useDispatch();
     console.log(delObj.crewid);
+    const crewid = delObj.crewid
     const handleDelete = async () => {
-        const response = await dispatch(DeleteCrewAction(delObj.crewid))
+        const response = await dispatch(DeleteCrewAction(crewid))
         console.log(response);
         dispatch(GetCrewAction());
     }

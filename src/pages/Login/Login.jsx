@@ -11,11 +11,13 @@ import Alert from '@mui/material/Alert';
 import { LoginAction } from '../../redux/actions/authAction';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const formik = useFormik({
         initialValues: {
@@ -27,10 +29,12 @@ const Login = () => {
             console.log(values);
             const data = await dispatch(LoginAction(values))
             console.log(data);
+            if (data.status === 'success') {
+                navigate('/dashboard/dashboard')
+            }
         },
 
         validationSchema: Yup.object().shape({
-            // username: Yup.string().required('Username is required'),
             email: Yup.string().required('Email is required'),
             password: Yup.string().required('Password is required'),
         }),
@@ -83,6 +87,7 @@ const Login = () => {
                                             id='email'
                                             label='Email'
                                             size='small'
+                                            type='email'
                                             fullWidth
                                             {...getFieldProps('email')}
                                             error={Boolean(errors.email && touched.email)}
@@ -102,7 +107,7 @@ const Login = () => {
                                         <TextField
                                             fullWidth
                                             autoComplete="current-password"
-                                            // type={showPassword ? 'text' : 'password'}
+                                            type={showPassword ? 'text' : 'password'}
                                             label="Password"
                                             size='small'
                                             {...getFieldProps('password')}

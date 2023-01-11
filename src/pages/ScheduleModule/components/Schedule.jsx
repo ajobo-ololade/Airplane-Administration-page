@@ -79,7 +79,7 @@ const Schedule = () => {
     return (
         <>
             <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} handleEditClose={handleEditClose} />
-            <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+            <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} handleDelOpen={handleDelOpen} />
             <TableContainer sx={{ height: 400, overflowY: 'auto' }}>
                 {/* {isLoading === true ? <LinearProgress /> : null} */}
                 

@@ -10,6 +10,8 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import FlightIcon from '@mui/icons-material/Flight';
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import StarsIcon from '@mui/icons-material/Stars';
+import { useNavigate } from 'react-router-dom';
+import { storageRemove } from "../../utils/utilities";
 
 export const DashboardSideBar = ({ }) => {
   const sideContent = [
@@ -70,6 +72,12 @@ export const DashboardSideBar = ({ }) => {
     },
   ]
 
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    storageRemove("token");
+    navigate("/");
+  };
+
   return (
     <>
       <Box position="fixe" sx={{ marginTop: '', height: 700, overflowY: 'auto', }} >
@@ -85,14 +93,13 @@ export const DashboardSideBar = ({ }) => {
             </ListItem>
           </List>
         ))}
-        <List>
+        <List onClick={handleLogOut}>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#">
+            <ListItemButton>
               <ListItemIcon>
                 <ModeNight />
               </ListItemIcon>
-              {/* onChange={e => setMode(mode === "light" ? "dark" : "light" )} */}
-              <Switch />
+              <ListItemText primary='Logout' />
             </ListItemButton>
           </ListItem>
         </List>

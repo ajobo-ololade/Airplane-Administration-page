@@ -211,7 +211,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     )
 }
 
-export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
+export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelClose }) => {
     useEffect(() => {}, [delObj]);
 
     const dispatch = useDispatch();
@@ -221,6 +221,7 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
         const response = await dispatch(DeleteAirplaneAction(numser))
         console.log(response);
         dispatch(GetAirplaneAction());
+        handleDelClose()
     }
     return (
         <Modal

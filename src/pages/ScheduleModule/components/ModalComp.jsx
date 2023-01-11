@@ -303,22 +303,15 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     )
 }
 
-export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
-    useEffect(() => {
-        // if (editObj) {
-        //   const { manufacturer,  model, aircraft_type, } = editObj;
-        // //   const priviledgeArray = JSON.parse(priviledges);
-        //   setFieldValue('manufacturer', manufacturer);
-        //   setFieldValue(' model',  model);
-        //   setFieldValue('aircraft_type', aircraft_type);
-        // }
-    }, [delObj]);
+export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelOpen }) => {
+    useEffect(() => {}, [delObj]);
 
     const dispatch = useDispatch();
     console.log(delObj.schedulenum);
     const handleDelete = async () => {
         const response = await dispatch(DeleteScheduleAction(delObj.schedulenum))
         dispatch(GetScheduleAction());
+        handleDelOpen()
     }
     return (
         <Modal

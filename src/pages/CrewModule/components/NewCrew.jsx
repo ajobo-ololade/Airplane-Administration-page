@@ -5,9 +5,9 @@ import Modals from '../../../components/Modal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { AddAirplaneAction, GetAirplaneAction } from '../../../redux/actions/airplaneActions';
 import { useDispatch, useSelector } from 'react-redux';
 import  LoadingButton  from '@mui/lab/LoadingButton';
+import { AddCrewAction, GetCrewAction } from '../../../redux/actions/crewAction';
 
 const NewCrew = () => {
   const [open, setOpen] = React.useState(false);
@@ -17,14 +17,14 @@ const NewCrew = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      manufacturer: '',
-      model: '',
-      aircraft_type: ''
+      empnum: '',
+      role: '',
+      scheduleid: ''
     },
 
     onSubmit: async (values, { resetForm, setSubmitting }) => {
-      const response = await dispatch(AddAirplaneAction(values));
-      dispatch(GetAirplaneAction());
+      const response = await dispatch(AddCrewAction(values));
+      dispatch(GetCrewAction());
 
       resetForm();
       handleClose();
@@ -32,9 +32,9 @@ const NewCrew = () => {
     },
 
     validationSchema: Yup.object().shape({
-      model: Yup.string().required('Model is required'),
-      manufacturer: Yup.string().required('Manufacturer is required'),
-      aircraft_type: Yup.string().required('Aircraft Type is required'),
+      empnum: Yup.string().required('Employee num is required'),
+      role: Yup.string().required('Role is required'),
+      scheduleid: Yup.string().required('Schedule id is required'),
     }),
   });
 
@@ -86,13 +86,13 @@ const NewCrew = () => {
 
                     <TextField
 
-                      id='manufacturer'
-                      label='Manufacturer'
+                      id='empnum'
+                      label='Employee num'
                       size='small'
                       fullWidth
-                      {...getFieldProps('manufacturer')}
-                      error={Boolean(errors.manufacturer && touched.manufacturer)}
-                      helperText={touched.manufacturer && errors.manufacturer}
+                      {...getFieldProps('empnum')}
+                      error={Boolean(errors.empnum && touched.empnum)}
+                      helperText={touched.empnum && errors.empnum}
 
                     />
                   </Grid>
@@ -107,13 +107,13 @@ const NewCrew = () => {
 
                     <TextField
 
-                      id='model'
-                      label='Model'
+                      id='role'
+                      label='Role'
                       size='small'
                       fullWidth
-                      {...getFieldProps('model')}
-                      error={Boolean(errors.model && touched.model)}
-                      helperText={touched.model && errors.model}
+                      {...getFieldProps('role')}
+                      error={Boolean(errors.role && touched.role)}
+                      helperText={touched.role && errors.role}
 
                     />
 
@@ -129,13 +129,13 @@ const NewCrew = () => {
 
                     <TextField
 
-                      id='aircraf_type'
-                      label='Aircraft Type'
+                      id='scheduleid'
+                      label='Schedule Id'
                       size='small'
                       fullWidth
-                      {...getFieldProps('aircraft_type')}
-                      error={Boolean(errors.aircraft_type && touched.aircraft_type)}
-                      helperText={touched.aircraft_type && errors.aircraft_type}
+                      {...getFieldProps('scheduleid')}
+                      error={Boolean(errors.scheduleid && touched.scheduleid)}
+                      helperText={touched.scheduleid && errors.scheduleid}
 
                     />
 

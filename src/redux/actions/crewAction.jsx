@@ -25,9 +25,9 @@ export const GetCrewAction = () => async (dispatch) => {
 
 }
 
-export const AddCrewAction = (obj) => async (dispatch) => {
+export const AddCrewAction = (value) => async (dispatch) => {
     try{
-        const data = await addCrewRequest(obj);
+        const data = await addCrewRequest(value);
         console.log(data);
         if(data?.message === true){
 
@@ -45,10 +45,10 @@ export const AddCrewAction = (obj) => async (dispatch) => {
  }
 }
 
-export const EditCrewAction = (id, value) => async (dispatch) => {
+export const EditCrewAction = (value) => async (dispatch) => {
 
     try{
-        const data = await editCrewRequest(id, value);
+        const data = await editCrewRequest(value);
         console.log(data);
         if(data?.message === true){
 

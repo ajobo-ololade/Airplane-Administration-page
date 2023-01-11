@@ -76,7 +76,7 @@ const Staffs = ({ staffs }) => {
     return (
         <>  
          <EditModal editObj={editObj} onClose={handleEditClose} editOpen={editOpen} />
-         <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} />
+         <DeleteModal delObj={delObj} onClose={handleDelClose} delOpen={delOpen} handleDelClose={handleDelClose} />
             <TableContainer>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>

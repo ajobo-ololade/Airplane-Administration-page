@@ -36,6 +36,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             values.id = editObj.typeid
             console.log(values);
             const response = await dispatch(EditAirplaneTypeAction(values));
+            console.log(response);
             dispatch(GetAirplaneTypeAction());
 
             resetForm();
@@ -56,15 +57,6 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
             sx={{ xs: {} }}
         >
             <Box sx={style}>
-            {/* <Grid sx={{height: '100%', alignItem: 'center', justifyContent: 'center'}}>
-                <Grid xs={12} sm={6} lg={4} sx={{border:' 2px solid #000', boxShadow: 24}}>
-                    <Grid container>
-                        <Grid item>
-                        
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid> */}
                 <Card sx={{ margin: 'auto', marginTop: '10px', padding: '2rem' }} >
                     <CardContent>
                         <Box
@@ -144,7 +136,7 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleEditClos
     )
 }
 
-export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
+export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelOpen }) => {
     useEffect(() => {}, [delObj]);
 
     const dispatch = useDispatch();
@@ -152,6 +144,7 @@ export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
     const handleDelete = async () => {
         const response = await dispatch(DeleteAirplaneTypeAction(delObj.typeid))
         dispatch(GetAirplaneTypeAction());
+        handleDelOpen()
     }
     return (
         <Modal

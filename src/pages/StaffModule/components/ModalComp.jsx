@@ -271,13 +271,14 @@ export const EditModal = ({ editOpen = "false", onClose, editObj, handleClose })
     )
 }
 
-export const DeleteModal = ({ delOpen = "false", onClose, delObj }) => {
+export const DeleteModal = ({ delOpen = "false", onClose, delObj, handleDelClose }) => {
     const dispatch = useDispatch();
     const handleDelete = async () => {
         console.log(delObj.empnum);
         const response = await dispatch(DeleteStaffAction(delObj.empnum));
         console.log(response);
         dispatch(GetStaffAction())
+        handleDelClose()
     }
     return (
         <Modal

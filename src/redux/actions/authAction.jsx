@@ -1,35 +1,30 @@
 import { loginRequest, signUpRequest } from "../../api/authRequest";
+import { storageSet } from "../../utils/utilities";
 import { messageActionType } from "../types";
 
 
-export const LoginAction = (values) => async (dispatch) => {
+export const LoginAction = (value) => async (dispatch) => {
   try {
-    // dispatch({
-    //   type: loadTypes.ISLOADING,
-    // });
-    const data = await loginRequest(values);
+   
+    const data = await loginRequest(value);
     console.log(data)
-    // if (data?.success) {
-    //   storageSet("token", data.content.token);
-    //   dispatch({
-    //     type: loginResponseTypes.SUCCESS,
-    //     payload: data.success.message,
-    //   });
-    // } else {
-    //   dispatch({
-    //     type: loginResponseTypes.ERROR,
-    //     payload: data.error.message,
-    //   });
-    // }
-    // dispatch({
-    //   type: loadTypes.LOAD_DONE,
-    // });
+    if (data?.status === 'success') {
+      storageSet("token", data.authorisation.token);
+      // storageSet("data", data.user);
+      dispatch({
+        type: messageActionType.SUCCESS_MESSAGE,
+        payload: data.status,
+      });
+    } else {
+      dispatch({
+        type: messageActionType.ERROR_MESSAGE,
+        payload: data.status,
+      });
+    }
+    
     return data
   } catch (error) {
-    // dispatch({
-    //   type: loginResponseTypes.ERROR,
-    //   payload: error.message,
-    // });
+    console.log(error);
     return error
   }
 };

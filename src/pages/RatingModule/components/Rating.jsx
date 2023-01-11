@@ -12,7 +12,7 @@ const Rating = () => {
 
     const { RATING } = useSelector((state) => state.RatingReducers);
 
-    console.log(RATING);
+    // console.log(RATING);
 
     const headerData = [
         {
@@ -41,7 +41,7 @@ const Rating = () => {
     const [delObj, setDelObj] = React.useState({});
     const edit = (e) => {
         setEditObj(e)
-        console.log(e);
+        // console.log(e);
         handleEditOpen()
     }
     const del = (e) => {

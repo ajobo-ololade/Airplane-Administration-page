@@ -91,6 +91,11 @@ export default function PersistentDrawerLeft() {
 
   const sideContent = [
     {
+      title: 'Airline System',
+      path: '/dashboard/dashboard',
+      // icon: <Home />
+    },
+    {
       title: 'Dashboard',
       path: '/dashboard/dashboard',
       icon: <Home />
@@ -117,22 +122,22 @@ export default function PersistentDrawerLeft() {
     },
     {
       title: "Schedule",
-      num: '/dashboard/crews',
+      path: '/dashboard/schedules',
       icon: <ListAltIcon />
     },
     {
       title: "Rating",
-      num: '/dashboard/ratings',
+      path: '/dashboard/ratings',
       icon: <StarsIcon />
     },
     {
       title: "Airplane Types",
-      num: '/dashboard/passangers',
+      path: '/dashboard/airplanetypes',
       icon: <ConnectingAirportsIcon />
     },
     {
       title: "Crew",
-      num: '/dashboard/schedules',
+      path: '/dashboard/crews',
       icon: <AccessibleIcon />
     },
     {
